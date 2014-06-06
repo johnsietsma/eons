@@ -1,0 +1,50 @@
+{
+   "folders":
+   [
+      {
+         "file_exclude_patterns":
+         [
+            "*.unity",
+            "*.wav",
+            "*.aif",
+            "*.mat",
+            "*.controller",
+            "*.asset",
+            "*.meta",
+            "*.anim",
+            "*.prefab",
+            "*.fla",
+            "*.sublime-project",
+            "*.pidb",
+            "*.userprefs",
+            "*.booproj",
+            "*.unityproj",
+            "*.csproj",
+            "*.sln"
+         ],
+         "folder_exclude_patterns":
+         [
+            "ProjectSettings",
+            "Library",
+            "Temp",
+            "builds"
+         ],
+         "path": "./"
+      }
+   ],
+   "settings":
+   {
+      "AStyleFormatter": {
+        "options_default": {
+            "style": "kr",
+            "pad-paren-in": true,
+            "break-closing-brackets": true,
+            "add-brackets": true,
+            "keep-one-line-blocks": true,
+            "keep-one-line-statements": true
+        }
+      }
+   },
+   "tab_size": 4,
+   "translate_tabs_to_spaces": true
+}
