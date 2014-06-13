@@ -6,9 +6,10 @@ namespace HutongGames.PlayMaker.Actions
 [Tooltip( "Perform a raycast into the scene using screen coordinates and stores the results. Use Ray Distance to set how close the camera must be to pick the object. NOTE: Uses the MainCamera!" )]
 public class CameraPick : FsmStateAction
 {
+    [Tooltip( "The camera that is used for picking." )]
     public Camera camera;
 
-    [Tooltip( "A Vector3 screen position. Commonly stored by other actions." )]
+    [Tooltip( "A Vector3 screen position." )]
     public FsmVector3 screenVector;
     public FsmBool normalized;
     [RequiredField]
@@ -24,7 +25,7 @@ public class CameraPick : FsmStateAction
     [UIHint( UIHint.Variable )]
     public FsmFloat storeDistance;
     [UIHint( UIHint.Layer )]
-    [Tooltip("Pick only from these layers.")]
+    [Tooltip( "Pick only from these layers." )]
     public FsmInt[] layerMask;
     [Tooltip( "Invert the mask, so you pick from all layers except those defined above." )]
     public FsmBool invertMask;
@@ -79,24 +80,28 @@ public class CameraPick : FsmStateAction
 
         RaycastHit hitInfo;
         var ray = camera.ScreenPointToRay( rayStart );
-        Physics.Raycast( ray, out hitInfo, rayDistance.Value, ActionHelpers.LayerArrayToLayerMask(layerMask, invertMask.Value));
+        Physics.Raycast( ray, out hitInfo, rayDistance.Value, ActionHelpers.LayerArrayToLayerMask( layerMask, invertMask.Value ) );
 
         var didPick = hitInfo.collider != null;
         storeDidPickObject.Value = didPick;
 
         if ( didPick ) {
+            //D.Log( "Did pick: " + hitInfo.collider.gameObject );
             storeGameObject.Value = hitInfo.collider.gameObject;
             storeDistance.Value = hitInfo.distance;
             storePoint.Value = hitInfo.point;
             storeNormal.Value = hitInfo.normal;
         }
         else {
+            //D.Log( "Didn't pick" );
             // TODO: not sure if this is the right strategy...
             storeGameObject.Value = null;
             storeDistance = Mathf.Infinity;
             storePoint.Value = Vector3.zero;
             storeNormal.Value = Vector3.zero;
         }
+
+        Debug.DrawLine( ray.origin, ray.direction * rayDistance.Value, Color.yellow );
 
     }
 }

@@ -44,7 +44,7 @@ namespace HutongGames.PlayMaker.Actions
 		public override void OnEnter()
 		{
 			DoGameObjectCompare();
-			
+
 			if (!everyFrame)
 			{
 				Finish();
@@ -55,23 +55,25 @@ namespace HutongGames.PlayMaker.Actions
 		{
 			DoGameObjectCompare();
 		}
-		
+
 		void DoGameObjectCompare()
 		{
 			var equal = Fsm.GetOwnerDefaultTarget(gameObjectVariable) == compareTo.Value;
 
 			storeResult.Value = equal;
-			
+
 			if (equal && equalEvent != null)
 			{
+				D.Log( "GO1:{0}=={1}", Fsm.GetOwnerDefaultTarget(gameObjectVariable), compareTo.Value );
 				Fsm.Event(equalEvent);
 			}
 			else if (!equal && notEqualEvent != null)
 			{
+				D.Log( "GO1:{0}!={1}", Fsm.GetOwnerDefaultTarget(gameObjectVariable), compareTo.Value );
 				Fsm.Event(notEqualEvent);
 			}
-			
+
 		}
-		
+
 	}
 }
