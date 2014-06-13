@@ -34,7 +34,7 @@ namespace HutongGames.PlayMaker.Actions
 		[Tooltip("Invert the mask, so you pick from all layers except those defined above.")]
 		public FsmBool invertMask;
 		public bool everyFrame;
-		
+
 		public override void Reset()
 		{
 			screenVector = new FsmVector3 { UseVariable = true };
@@ -51,17 +51,17 @@ namespace HutongGames.PlayMaker.Actions
 			invertMask = false;
 			everyFrame = false;
 		}
-		
+
 		public override void OnEnter()
 		{
 			DoScreenPick();
-			
+
 			if (!everyFrame)
 			{
 				Finish();
 			}
 		}
-		
+
 		public override void OnUpdate()
 		{
 			DoScreenPick();
@@ -77,24 +77,24 @@ namespace HutongGames.PlayMaker.Actions
 			}
 
 			var rayStart = Vector3.zero;
-			
+
 			if (!screenVector.IsNone) rayStart = screenVector.Value;
 			if (!screenX.IsNone) rayStart.x = screenX.Value;
 			if (!screenY.IsNone) rayStart.y = screenY.Value;
-			
+
 			if (normalized.Value)
 			{
 				rayStart.x *= Screen.width;
 				rayStart.y *= Screen.height;
 			}
-			
+
 			RaycastHit hitInfo;
 			var ray = Camera.main.ScreenPointToRay(rayStart);
 			Physics.Raycast(ray, out hitInfo, rayDistance.Value, ActionHelpers.LayerArrayToLayerMask(layerMask, invertMask.Value));
-			
+
 			var didPick = hitInfo.collider != null;
 			storeDidPickObject.Value = didPick;
-			
+
 			if (didPick)
 			{
 				storeGameObject.Value = hitInfo.collider.gameObject;
@@ -110,7 +110,7 @@ namespace HutongGames.PlayMaker.Actions
 				storePoint.Value = Vector3.zero;
 				storeNormal.Value = Vector3.zero;
 			}
-			
+
 		}
 	}
 }

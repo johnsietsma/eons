@@ -8,11 +8,11 @@ public class FreeLookCam : PivotBasedCameraRig
 {
 	// This script is designed to be placed on the root object of a camera rig,
 	// comprising 3 gameobjects, each parented to the next:
-	
+
 	// 	Camera Rig
 	// 		Pivot
 	// 			Camera
-	
+
 	[SerializeField] private float moveSpeed = 1f;      // How fast the rig will move to keep up with the target's position.
 	[Range(0f,10f)]
 	[SerializeField] private float turnSpeed = 1.5f;    // How fast the rig will rotate from user input.
@@ -21,7 +21,7 @@ public class FreeLookCam : PivotBasedCameraRig
 	[SerializeField] private float tiltMin = 45f;       // The minimum value of the x axis rotation of the pivot.
 	[SerializeField] private bool lockCursor = false;   // Whether the cursor should be hidden and locked.
 
-	
+
 	private float lookAngle;                            // The rig's y axis rotation.
 	private float tiltAngle;                            // The pivot's x axis rotation.
 
@@ -60,13 +60,13 @@ public class FreeLookCam : PivotBasedCameraRig
 	{
 		Screen.lockCursor = false;
 	}
-	
+
 	protected override void FollowTarget (float deltaTime)
 	{
 		// Move the rig towards target position.
 		transform.position = Vector3.Lerp(transform.position, target.position, deltaTime * moveSpeed);
 	}
-	
+
 	void HandleRotationMovement()
 	{
 		// Read the user input
@@ -77,7 +77,7 @@ public class FreeLookCam : PivotBasedCameraRig
 		var x = Input.GetAxis ("Mouse X");
 		var y = Input.GetAxis ("Mouse Y");
 		#endif
-		
+
 		// smooth the user input
 		if (turnSmoothing > 0)
 		{
@@ -87,13 +87,13 @@ public class FreeLookCam : PivotBasedCameraRig
 			smoothX = x;
 			smoothY = y;
 		}
-		
+
 		// Adjust the look angle by an amount proportional to the turn speed and horizontal input.
 		lookAngle += smoothX * turnSpeed;
-		
+
 		// Rotate the rig (the root object) around Y axis only:
 		transform.rotation = Quaternion.Euler (0f, lookAngle, 0f);
-		
+
 		#if MOBILE_INPUT
 		// For tilt input, we need to behave differently depending on whether we're using mouse or touch input:
 		// on mobile, vertical input is directly mapped to tilt value, so it springs back automatically when the look input is released
@@ -106,10 +106,10 @@ public class FreeLookCam : PivotBasedCameraRig
 		// and make sure the new value is within the tilt range
 		tiltAngle = Mathf.Clamp(tiltAngle, -tiltMin, tiltMax);
 		#endif
-		
+
 		// Tilt input around X is applied to the pivot (the child of this object)
 		pivot.localRotation = Quaternion.Euler(tiltAngle, 0f, 0f);
-		
+
 	}
 
 }
