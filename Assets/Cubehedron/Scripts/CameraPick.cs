@@ -29,6 +29,7 @@ public class CameraPick : FsmStateAction
     public FsmInt[] layerMask;
     [Tooltip( "Invert the mask, so you pick from all layers except those defined above." )]
     public FsmBool invertMask;
+    public bool drawDebugRay;
     public bool everyFrame;
 
     public override void Reset()
@@ -44,6 +45,7 @@ public class CameraPick : FsmStateAction
         storeDistance = null;
         layerMask = new FsmInt[0];
         invertMask = false;
+        drawDebugRay = false;
         everyFrame = false;
     }
 
@@ -101,7 +103,9 @@ public class CameraPick : FsmStateAction
             storeNormal.Value = Vector3.zero;
         }
 
-        Debug.DrawLine( ray.origin, ray.direction * rayDistance.Value, Color.yellow );
+        if ( drawDebugRay ) {
+            Debug.DrawLine( ray.origin, ray.direction * rayDistance.Value, Color.yellow );
+        }
 
     }
 }

@@ -64,12 +64,10 @@ namespace HutongGames.PlayMaker.Actions
 
 			if (equal && equalEvent != null)
 			{
-				D.Log( "GO1:{0}=={1}", Fsm.GetOwnerDefaultTarget(gameObjectVariable), compareTo.Value );
 				Fsm.Event(equalEvent);
 			}
 			else if (!equal && notEqualEvent != null)
 			{
-				D.Log( "GO1:{0}!={1}", Fsm.GetOwnerDefaultTarget(gameObjectVariable), compareTo.Value );
 				Fsm.Event(notEqualEvent);
 			}
 

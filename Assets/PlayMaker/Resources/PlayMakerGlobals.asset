@@ -23,6 +23,12 @@ MonoBehaviour:
     quaternionVariables: []
     gameObjectVariables:
     - useVariable: 1
+      name: Current Storage Slot
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: {fileID: 0}
+    - useVariable: 1
       name: Selected Object
       tooltip: 
       showInInspector: 0
@@ -31,4 +37,6 @@ MonoBehaviour:
     objectVariables: []
     materialVariables: []
     textureVariables: []
-  events: []
+  events:
+  - DESELECTED
+  - SELECTED
