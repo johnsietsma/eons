@@ -20,7 +20,7 @@ public class CrossPlatformInitialize {
 			SetEnabled("MOBILE_INPUT",true,true);
         }
     }
-    
+
 	[MenuItem("Mobile Input/Enable")]
 	static void Enable()
 	{
@@ -31,13 +31,13 @@ public class CrossPlatformInitialize {
 			case BuildTarget.Android:
 			case BuildTarget.iPhone:
 			case BuildTarget.WP8Player:
-			case BuildTarget.BB10:
+			case BuildTarget.BlackBerry:
 			EditorUtility.DisplayDialog("Mobile Input","You have enabled Mobile Input. You'll need to use the Unity Remote app on a connected device to control your game in the Editor.","OK");
 			break;
 
 		default:
 			EditorUtility.DisplayDialog("Mobile Input","You have enabled Mobile Input, but you have a non-mobile build target selected in your build settings. The mobile control rigs won't be active or visible on-screen until you switch the build target to a mobile platform.","OK");
-			break; 
+			break;
 		}
 	}
 
@@ -57,12 +57,12 @@ public class CrossPlatformInitialize {
 		case BuildTarget.Android:
 		case BuildTarget.iPhone:
 		case BuildTarget.WP8Player:
-		case BuildTarget.BB10:
+		case BuildTarget.BlackBerry:
 			EditorUtility.DisplayDialog("Mobile Input","You have disabled Mobile Input. Mobile control rigs won't be visible, and the Cross Platform Input functions will always return standalone controls.","OK");
-			break;		
+			break;
         }
-        
-        
+
+
 	}
 	[MenuItem("Mobile Input/Disable", true)]
 	static bool DisableValidate()
@@ -78,17 +78,17 @@ public class CrossPlatformInitialize {
 		BuildTargetGroup.Android,
 		BuildTargetGroup.iPhone,
         BuildTargetGroup.WP8,
-		BuildTargetGroup.BB10,
+		BuildTargetGroup.BlackBerry,
     };
-    
+
 	static BuildTargetGroup[] mobileBuildTargetGroups = new BuildTargetGroup[]
 	{
 		BuildTargetGroup.Android,
 		BuildTargetGroup.iPhone,
         BuildTargetGroup.WP8,
-		BuildTargetGroup.BB10,
+		BuildTargetGroup.BlackBerry,
     };
-    
+
 	static void SetEnabled(string defineName, bool enable, bool mobile)
 	{
 		//Debug.Log("setting "+defineName+" to "+enable);
@@ -97,7 +97,7 @@ public class CrossPlatformInitialize {
 			var defines = GetDefinesList(group);
 			if (enable)
 			{
-				if (!defines.Contains(defineName)) 
+				if (!defines.Contains(defineName))
 				{
 					defines.Add(defineName);
 				} else {
@@ -115,11 +115,11 @@ public class CrossPlatformInitialize {
 			PlayerSettings.SetScriptingDefineSymbolsForGroup( group, definesString );
 		}
 	}
-	
+
 	static List<string> GetDefinesList(BuildTargetGroup group)
 	{
 		return new List<string>( PlayerSettings.GetScriptingDefineSymbolsForGroup( group ).Split(';'));
 	}
 
-	
+
 }

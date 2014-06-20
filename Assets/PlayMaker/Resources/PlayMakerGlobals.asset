@@ -17,7 +17,19 @@ MonoBehaviour:
     boolVariables: []
     stringVariables: []
     vector2Variables: []
-    vector3Variables: []
+    vector3Variables:
+    - useVariable: 1
+      name: RayHitPoint
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: {x: 0, y: 0, z: 0}
+    - useVariable: 1
+      name: RayPlaneIntersection
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: {x: 0, y: 0, z: 0}
     colorVariables: []
     rectVariables: []
     quaternionVariables: []
@@ -34,9 +46,17 @@ MonoBehaviour:
       showInInspector: 0
       networkSync: 0
       value: {fileID: 0}
+    - useVariable: 1
+      name: SelectedTrigger
+      tooltip: 
+      showInInspector: 0
+      networkSync: 0
+      value: {fileID: 0}
     objectVariables: []
     materialVariables: []
     textureVariables: []
   events:
   - DESELECTED
   - SELECTED
+  - RaycastEndSelect
+  - RaycastStartSelect

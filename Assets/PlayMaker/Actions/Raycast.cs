@@ -9,7 +9,7 @@ namespace HutongGames.PlayMaker.Actions
 	public class Raycast : FsmStateAction
 	{
         //[ActionSection("Setup Raycast")]
- 
+
 		[Tooltip("Start ray at game object position. \nOr use From Position parameter.")]
 		public FsmOwnerDefault fromGameObject;
 
@@ -25,7 +25,7 @@ namespace HutongGames.PlayMaker.Actions
 		[Tooltip("The length of the ray. Set to -1 for infinity.")]
 		public FsmFloat distance;
 
-        [ActionSection("Result")] 
+        [ActionSection("Result")]
 
 		[Tooltip("Event to send if the ray hits an object.")]
 		[UIHint(UIHint.Variable)]
@@ -51,7 +51,7 @@ namespace HutongGames.PlayMaker.Actions
         [Tooltip("Get the distance along the ray to the hit point and store it in a variable.")]
         public FsmFloat storeHitDistance;
 
-        [ActionSection("Filter")] 
+        [ActionSection("Filter")]
 
         [Tooltip("Set how often to cast a ray. 0 = once, don't repeat; 1 = everyFrame; 2 = every other frame... \nSince raycasts can get expensive use the highest repeat interval you can get away with.")]
         public FsmInt repeatInterval;
@@ -63,16 +63,16 @@ namespace HutongGames.PlayMaker.Actions
         [Tooltip("Invert the mask, so you pick from all layers except those defined above.")]
         public FsmBool invertMask;
 
-		[ActionSection("Debug")] 
-		
+		[ActionSection("Debug")]
+
 		[Tooltip("The color to use for the debug line.")]
 		public FsmColor debugColor;
 
 		[Tooltip("Draw a debug line. Note: Check Gizmos in the Game View to see it in game.")]
 		public FsmBool debug;
-		
+
 		int repeat;
-		
+
 		public override void Reset()
 		{
 			fromGameObject = null;
@@ -96,23 +96,23 @@ namespace HutongGames.PlayMaker.Actions
 		public override void OnEnter()
 		{
 			DoRaycast();
-			
+
 			if (repeatInterval.Value == 0)
 			{
 				Finish();
-			}		
+			}
 		}
 
 		public override void OnUpdate()
 		{
 			repeat--;
-			
+
 			if (repeat == 0)
 			{
 				DoRaycast();
 			}
 		}
-		
+
 		void DoRaycast()
 		{
 			repeat = repeatInterval.Value;
@@ -123,9 +123,9 @@ namespace HutongGames.PlayMaker.Actions
 			}
 
 			var go = Fsm.GetOwnerDefaultTarget(fromGameObject);
-			
+
 			var originPos = go != null ? go.transform.position : fromPosition.Value;
-			
+
 			var rayLength = Mathf.Infinity;
 			if (distance.Value > 0 )
 			{
@@ -140,13 +140,13 @@ namespace HutongGames.PlayMaker.Actions
 
 			RaycastHit hitInfo;
 			Physics.Raycast(originPos, dirVector, out hitInfo, rayLength, ActionHelpers.LayerArrayToLayerMask(layerMask, invertMask.Value));
-			
+
 			Fsm.RaycastHitInfo = hitInfo;
-			
+
 			var didHit = hitInfo.collider != null;
-			
+
 			storeDidHit.Value = didHit;
-			
+
 			if (didHit)
 			{
 				storeHitObject.Value = hitInfo.collider.collider.gameObject;
@@ -155,7 +155,14 @@ namespace HutongGames.PlayMaker.Actions
                 storeHitDistance.Value = Fsm.RaycastHitInfo.distance;
 				Fsm.Event(hitEvent);
 			}
-			
+			else
+			{
+				storeHitObject.Value = null;
+                storeHitPoint.Value = Vector3.zero;
+                storeHitNormal.Value = Vector3.up;
+                storeHitDistance.Value = -1;
+			}
+
 			if (debug.Value)
 			{
 				var debugRayLength = Mathf.Min(rayLength, 1000);
