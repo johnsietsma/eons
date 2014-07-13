@@ -14,6 +14,7 @@ namespace HutongGames.PlayMaker.Actions
     {
         [ObjectType(typeof(MonoBehaviour))]
         [Tooltip("Store the component in an Object variable.\nNOTE: Set theObject variable's Object Type to get a component of that type. E.g., set Object Type to UnityEngine.AudioListener to get the AudioListener component on the camera.")]
+        [UIHint(UIHint.Behaviour)]
         public FsmObject behaviour;
 
         //[UIHint(UIHint.Method)]
@@ -38,7 +39,7 @@ namespace HutongGames.PlayMaker.Actions
         private ParameterInfo[] cachedParameterInfo;
         private object[] parametersArray;
         private string errorString;
-        
+
         public override void OnEnter()
         {
             parametersArray = new object[parameters.Length];
@@ -110,7 +111,7 @@ namespace HutongGames.PlayMaker.Actions
             cachedMethodInfo = cachedType.GetTypeInfo().GetDeclaredMethod(methodName.Value);
 #else
             cachedMethodInfo = cachedType.GetMethod(methodName.Value);
-#endif            
+#endif
             if (cachedMethodInfo == null)
             {
                 errorString += "Method Name is invalid: " + methodName.Value +"\n";
