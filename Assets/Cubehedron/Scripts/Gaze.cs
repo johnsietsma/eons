@@ -14,23 +14,22 @@ public class Gaze : MonoBehaviour
     // Information about the gaze
     public RaycastHit CurrentGazeHit { get; private set; }
     public GameObject CurrentGazeObject { get; private set; }
-    public Transform GazeTransform { get { return gazeTransform; } }
+    public Transform GazeTransform { get { return gazeCamera.transform;  } }
 
-    [Tooltip( "The Transform the gaze originates from." )]
-    [SerializeField] private Transform gazeTransform;
+    [Tooltip( "The Rift Camera interface" )]
+    [SerializeField] private OVRCameraController ovrCameraController;
 
     [Tooltip( "The layers the gaze will hit" )]
     [SerializeField] private LayerMask gazeLayerMask;
 
     [SerializeField] private bool debug;
 
-    void Awake()
+    private Camera gazeCamera;
+
+    void Start()
     {
-        if ( gazeTransform == null ) {
-            // Grab the main camera if the game transform hasn't been set or is disabled.
-            // This is useful when the Oculus camera is turned off.
-            gazeTransform = Camera.main.transform;
-        }
+        UpdateCamera();
+        OVRMessenger.AddListener<OVRMainMenu.Device, bool>( "Sensor_Attached", UpdateDeviceDetectionMsgCallback );
     }
 
     void Update ()
@@ -38,7 +37,7 @@ public class Gaze : MonoBehaviour
         RaycastHit hit;
         GameObject newCurrentGazeObject;
 
-        if ( Physics.Raycast( gazeTransform.position, gazeTransform.forward, out hit, Mathf.Infinity, gazeLayerMask  ) ) {
+        if ( Physics.Raycast( GazeTransform.position, GazeTransform.forward, out hit, Mathf.Infinity, gazeLayerMask  ) ) {
             CurrentGazeHit = hit;
             newCurrentGazeObject = hit.transform.gameObject;
 
@@ -66,6 +65,22 @@ public class Gaze : MonoBehaviour
 
     void OnGizmosSelected()
     {
-        Gizmos.DrawRay( gazeTransform.position, gazeTransform.forward );
+        Gizmos.DrawRay( GazeTransform.position, GazeTransform.forward );
     }
+
+    void UpdateDeviceDetectionMsgCallback( OVRMainMenu.Device device, bool attached )
+    {
+        UpdateCamera();
+    }
+
+    private void UpdateCamera()
+    {
+        if ( OVRDevice.IsHMDPresent() ) {
+            ovrCameraController.GetCamera( ref gazeCamera );
+        }
+        else {
+            gazeCamera = Camera.main;
+        }
+    }
+
 }
