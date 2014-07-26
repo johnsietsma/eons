@@ -22,14 +22,14 @@ public class GazePlayMakerEvents : MonoBehaviour
         }
     }
 
-    public void OnGazeEnter( Gaze gaze )
+    public void OnGazeEnter( GazeHit hit )
     {
         foreach ( var fsm in playMakerFSMs ) {
             fsm.Fsm.Event( gazeEnterEvent );
         }
     }
 
-    public void OnGazeExit( Gaze gaze )
+    public void OnGazeExit( GazeHit hit )
     {
         foreach ( var fsm in playMakerFSMs ) {
             fsm.Fsm.Event( gazeExitEvent );

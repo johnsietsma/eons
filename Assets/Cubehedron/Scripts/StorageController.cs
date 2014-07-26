@@ -2,31 +2,13 @@
 using System;
 using System.Collections;
 
-[Serializable]
-public class MoveToParams
-{
-    public Vector3 position;
-    public bool isLocal;
-    public float time;
-    public iTween.EaseType easeType;
-
-    public Hashtable ToHash()
-    {
-        return iTween.Hash(
-                   "position", position,
-                   "isLocal", isLocal,
-                   "time", time,
-                   "easeType", easeType
-               );
-    }
-}
-
 public class StorageController : MonoBehaviour
 {
-
+    [SerializeField] private GameObject tray;
     [SerializeField] private Transform slotsParent;
     [SerializeField] private Transform currentSlot;
     [SerializeField] private MoveToParams dockTweenParams;
+    [SerializeField] private BasicParams turnTweenParams;
 
     private Transform[] slots;
 
@@ -45,18 +27,26 @@ public class StorageController : MonoBehaviour
         iTween.MoveTo( prop, dockTweenParams.ToHash() );
     }
 
-    public void TurnLeft()
+    public void OnGazeLeftEnter( GazeHit hit )
     {
         int index = Array.IndexOf( slots, currentSlot );
         index--;
         if ( index < 0 ) { index = slots.Length - 1; }
         currentSlot = slots[index];
+
+        var p = turnTweenParams.ToHash();
+        p["amount"] = new Vector3( 0, -0.25f, 0 );
+        iTween.RotateBy( tray, p );
     }
 
-    public void TurnRight()
+    public void OnGazeRightEnter( GazeHit hit )
     {
         int index = Array.IndexOf( slots, currentSlot );
         currentSlot = slots[++index % slots.Length];
+
+        var p = turnTweenParams.ToHash();
+        p["amount"] = new Vector3( 0, 0.25f, 0 );
+        iTween.RotateBy( tray, p );
     }
 
 }

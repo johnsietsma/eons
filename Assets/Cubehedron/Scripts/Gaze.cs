@@ -52,9 +52,14 @@ public class Gaze : MonoBehaviour
         }
 
         if ( CurrentGazeObject != newCurrentGazeObject ) {
+            var gazeHit = new GazeHit() {
+                gaze = this,
+                hit = hit
+            };
+
             // Exit the current gaze object
             if ( CurrentGazeObject != null ) {
-                CurrentGazeObject.SendMessage( GazeExitMessage, this, SendMessageOptions.DontRequireReceiver );
+                CurrentGazeObject.SendMessage( GazeExitMessage, gazeHit, SendMessageOptions.DontRequireReceiver );
                 if ( debug ) { D.Log( "GazeExit: {0}", CurrentGazeObject.name ); }
             }
 
@@ -62,7 +67,7 @@ public class Gaze : MonoBehaviour
             CurrentGazeObject = newCurrentGazeObject;
 
             // Enter the new gaze object
-            CurrentGazeObject.SendMessage( GazeEnterMessage, this, SendMessageOptions.DontRequireReceiver );
+            CurrentGazeObject.SendMessage( GazeEnterMessage, gazeHit, SendMessageOptions.DontRequireReceiver );
             if ( debug ) { D.Log( "GazeEnter: {0}", CurrentGazeObject.name ); }
         }
     }

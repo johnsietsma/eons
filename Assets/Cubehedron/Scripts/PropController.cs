@@ -19,12 +19,12 @@ public class PropController : MonoBehaviour
         return gazePickPoint.GetPickPoint( currentGaze );
     }
 
-    public void OnGazeEnter( Gaze gaze )
+    public void OnGazeEnter( GazeHit hit )
     {
-        currentGaze = gaze;
+        currentGaze = hit.gaze;
     }
 
-    public void OnGazeExit( Gaze gaze )
+    public void OnGazeExit( GazeHit hit )
     {
         currentGaze = null;
     }
