@@ -2627,7 +2627,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: 126d619cf4daa52469682f85c1378b4a, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11400010, guid: 126d619cf4daa52469682f85c1378b4a, type: 2}
       propertyPath: WireMode
@@ -3256,6 +3256,7 @@ GameObject:
   - 92: {fileID: 823239910}
   - 124: {fileID: 823239909}
   - 81: {fileID: 823239908}
+  - 114: {fileID: 823239913}
   m_Layer: 11
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3328,6 +3329,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1380377435}
   m_RootOrder: 0
+--- !u!114 &823239913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 823239907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd869c80176084cf28ef6f67e97ec733, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &851074878
 GameObject:
   m_ObjectHideFlags: 0
@@ -4367,7 +4379,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   previewOnGUI: 1
   enableGUILayout: 1
-  drawStateLabels: 1
+  drawStateLabels: 0
   GUITextureStateLabels: 1
   GUITextStateLabels: 1
   filterLabelsWithDistance: 0
@@ -4404,7 +4416,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1164609051
 Transform:
   m_ObjectHideFlags: 0
@@ -4579,7 +4591,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1380377435}
-  - 114: {fileID: 1380377436}
   - 114: {fileID: 1380377438}
   m_Layer: 11
   m_Name: Camera Rig
@@ -4602,17 +4613,6 @@ Transform:
   - {fileID: 1164609051}
   m_Father: {fileID: 567657524}
   m_RootOrder: 0
---- !u!114 &1380377436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1380377434}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd869c80176084cf28ef6f67e97ec733, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1380377438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4624,7 +4624,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf3f06778bc98400ab86c286c31d1928, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gazeTransform: {fileID: 0}
+  ovrCameraController: {fileID: 1164609056}
+  mouseCameraController: {fileID: 823239907}
   gazeLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295

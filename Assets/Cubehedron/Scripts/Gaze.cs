@@ -19,6 +19,9 @@ public class Gaze : MonoBehaviour
     [Tooltip( "The Rift Camera interface" )]
     [SerializeField] private OVRCameraController ovrCameraController;
 
+    [Tooltip( "The FreeLook component for non-HMD look control." )]
+    [SerializeField] private GameObject mouseCameraController;
+
     [Tooltip( "The layers the gaze will hit" )]
     [SerializeField] private LayerMask gazeLayerMask;
 
@@ -30,6 +33,7 @@ public class Gaze : MonoBehaviour
     {
         UpdateCamera();
         OVRMessenger.AddListener<OVRMainMenu.Device, bool>( "Sensor_Attached", UpdateDeviceDetectionMsgCallback );
+        Screen.showCursor = false;
     }
 
     void Update ()
@@ -76,9 +80,13 @@ public class Gaze : MonoBehaviour
     private void UpdateCamera()
     {
         if ( OVRDevice.IsHMDPresent() ) {
+            ovrCameraController.gameObject.SetActive( true );
+            mouseCameraController.SetActive( false );
             ovrCameraController.GetCamera( ref gazeCamera );
         }
         else {
+            ovrCameraController.gameObject.SetActive( false );
+            mouseCameraController.SetActive( true );
             gazeCamera = Camera.main;
         }
     }
