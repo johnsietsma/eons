@@ -9,6 +9,11 @@ public class GazeUVShifter : MonoBehaviour
     private Vector2 currentOffset;
     private bool hasGaze = false;
 
+    void Awake()
+    {
+        currentOffset = offsetMaterial.mainTextureOffset;
+    }
+
     void Update()
     {
         if( hasGaze ) {

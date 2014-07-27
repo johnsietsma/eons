@@ -22,6 +22,12 @@ public class GazeGuidance : MonoBehaviour
 
     void Update ()
     {
+        if ( gaze.CurrentCamera == null ) { return; }
+
+        var gazeCamTransform = gaze.CurrentCamera.transform;
+        transform.position = gazeCamTransform.position;
+        transform.rotation = gazeCamTransform.rotation;
+
         if ( gaze.CurrentGazeHit.collider != null ) {
             if ( !gazePointer.activeInHierarchy ) {
                 gazePointer.SetActive( true );

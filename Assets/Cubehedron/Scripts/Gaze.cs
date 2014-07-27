@@ -11,23 +11,23 @@ public class Gaze : MonoBehaviour
     public static readonly string GazeEnterMessage = "OnGazeEnter";
     public static readonly string GazeExitMessage = "OnGazeExit";
 
+    public Camera CurrentCamera { get; private set; }
+
     // Information about the gaze
     public RaycastHit CurrentGazeHit { get; private set; }
     public GameObject CurrentGazeObject { get; private set; }
-    public Transform GazeTransform { get { return gazeCamera.transform;  } }
+    public Transform GazeTransform { get { return CurrentCamera.transform;  } }
 
     [Tooltip( "The Rift Camera interface" )]
     [SerializeField] private OVRCameraController ovrCameraController;
 
     [Tooltip( "The FreeLook component for non-HMD look control." )]
-    [SerializeField] private GameObject mouseCameraController;
+    [SerializeField] private Camera mouseCamera;
 
     [Tooltip( "The layers the gaze will hit" )]
     [SerializeField] private LayerMask gazeLayerMask;
 
     [SerializeField] private bool debug;
-
-    private Camera gazeCamera;
 
     void Start()
     {
@@ -66,9 +66,11 @@ public class Gaze : MonoBehaviour
             // Switch to the new object
             CurrentGazeObject = newCurrentGazeObject;
 
-            // Enter the new gaze object
-            CurrentGazeObject.SendMessage( GazeEnterMessage, gazeHit, SendMessageOptions.DontRequireReceiver );
-            if ( debug ) { D.Log( "GazeEnter: {0}", CurrentGazeObject.name ); }
+            if ( CurrentGazeObject != null ) {
+                // Enter the new gaze object
+                CurrentGazeObject.SendMessage( GazeEnterMessage, gazeHit, SendMessageOptions.DontRequireReceiver );
+                if ( debug ) { D.Log( "GazeEnter: {0}", CurrentGazeObject.name ); }
+            }
         }
     }
 
@@ -86,13 +88,15 @@ public class Gaze : MonoBehaviour
     {
         if ( OVRDevice.IsHMDPresent() ) {
             ovrCameraController.gameObject.SetActive( true );
-            mouseCameraController.SetActive( false );
-            ovrCameraController.GetCamera( ref gazeCamera );
+            mouseCamera.gameObject.SetActive( false );
+            Camera cam = null;
+            ovrCameraController.GetCamera( ref cam );
+            CurrentCamera = cam;
         }
         else {
             ovrCameraController.gameObject.SetActive( false );
-            mouseCameraController.SetActive( true );
-            gazeCamera = Camera.main;
+            mouseCamera.gameObject.SetActive( true );
+            CurrentCamera = mouseCamera;
         }
     }
 
