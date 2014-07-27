@@ -455,8 +455,8 @@ MonoBehaviour:
   mouseCamera: {fileID: 2000002}
   gazeLayerMask:
     serializedVersion: 2
-    m_Bits: 14336
-  debug: 1
+    m_Bits: 3584
+  debug: 0
 --- !u!114 &11400016
 MonoBehaviour:
   m_ObjectHideFlags: 1

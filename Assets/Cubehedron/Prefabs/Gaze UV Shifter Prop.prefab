@@ -13,7 +13,7 @@ GameObject:
   - 114: {fileID: 11400002}
   - 82: {fileID: 8200000}
   m_Layer: 9
-  m_Name: UV Shifter Prop
+  m_Name: Gaze UV Shifter Prop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

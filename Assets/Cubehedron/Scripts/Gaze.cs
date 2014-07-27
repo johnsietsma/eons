@@ -9,6 +9,7 @@ using System.Collections;
 public class Gaze : MonoBehaviour
 {
     public static readonly string GazeEnterMessage = "OnGazeEnter";
+    public static readonly string GazeStayMessage = "OnGazeStay";
     public static readonly string GazeExitMessage = "OnGazeExit";
 
     public Camera CurrentCamera { get; private set; }
@@ -27,13 +28,14 @@ public class Gaze : MonoBehaviour
     [Tooltip( "The layers the gaze will hit" )]
     [SerializeField] private LayerMask gazeLayerMask;
 
+    [SerializeField] private bool hideMousePointer;
     [SerializeField] private bool debug;
 
     void Start()
     {
         UpdateCamera();
         OVRMessenger.AddListener<OVRMainMenu.Device, bool>( "Sensor_Attached", UpdateDeviceDetectionMsgCallback );
-        Screen.showCursor = false;
+        Screen.showCursor = !hideMousePointer;
     }
 
     void Update ()
@@ -51,26 +53,31 @@ public class Gaze : MonoBehaviour
             newCurrentGazeObject = null;
         }
 
-        if ( CurrentGazeObject != newCurrentGazeObject ) {
-            var gazeHit = new GazeHit() {
-                gaze = this,
-                hit = hit
-            };
+        bool newGazeObject = CurrentGazeObject != newCurrentGazeObject;
 
-            // Exit the current gaze object
-            if ( CurrentGazeObject != null ) {
-                CurrentGazeObject.SendMessage( GazeExitMessage, gazeHit, SendMessageOptions.DontRequireReceiver );
-                if ( debug ) { D.Log( "GazeExit: {0}", CurrentGazeObject.name ); }
-            }
+        var gazeHit = new GazeHit() {
+            gaze = this,
+            hit = hit
+        };
 
-            // Switch to the new object
-            CurrentGazeObject = newCurrentGazeObject;
+        // Exit the current gaze object
+        if ( newGazeObject && CurrentGazeObject != null ) {
+            CurrentGazeObject.SendMessage( GazeExitMessage, gazeHit, SendMessageOptions.DontRequireReceiver );
+            if ( debug ) { D.Log( "GazeExit: {0}", CurrentGazeObject.name ); }
+        }
 
-            if ( CurrentGazeObject != null ) {
-                // Enter the new gaze object
-                CurrentGazeObject.SendMessage( GazeEnterMessage, gazeHit, SendMessageOptions.DontRequireReceiver );
-                if ( debug ) { D.Log( "GazeEnter: {0}", CurrentGazeObject.name ); }
-            }
+        CurrentGazeObject = newCurrentGazeObject;
+
+        if ( CurrentGazeObject != null ) {
+            CurrentGazeObject.SendMessage( GazeStayMessage, gazeHit, SendMessageOptions.DontRequireReceiver );
+            if ( debug ) { D.Log( "GazeStay: {0}", CurrentGazeObject.name ); }
+        }
+
+        // Switch to the new object
+        if ( newGazeObject && CurrentGazeObject != null ) {
+            // Enter the new gaze object
+            CurrentGazeObject.SendMessage( GazeEnterMessage, gazeHit, SendMessageOptions.DontRequireReceiver );
+            if ( debug ) { D.Log( "GazeEnter: {0}", CurrentGazeObject.name ); }
         }
     }
 
