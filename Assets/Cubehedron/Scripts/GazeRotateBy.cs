@@ -13,7 +13,6 @@ public class GazeRotateBy : MonoBehaviour
     {
         if ( hasGaze ) {
             var r = rotation * Time.deltaTime * speed;
-            D.Log( "Rot: " + r );
             transform.Rotate( r, space );
         }
     }
