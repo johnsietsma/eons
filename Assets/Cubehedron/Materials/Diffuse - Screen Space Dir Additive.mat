@@ -31,7 +31,7 @@ Material:
       data:
         first:
           name: _ScreenSpaceFactor
-        second: 8
+        second: 14
       data:
         first:
           name: _ScreenSpaceAmount
