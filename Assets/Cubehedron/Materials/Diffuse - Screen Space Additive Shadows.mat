@@ -17,7 +17,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: d0d0678d070bd974682f7ad8c22a68b4, type: 3}
+          m_Texture: {fileID: 2800000, guid: 3cae02495b88d2d4fbf19382b7993691, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -35,7 +35,7 @@ Material:
       data:
         first:
           name: _ScreenSpaceAmount
-        second: .100000001
+        second: .300000012
     m_Colors:
       data:
         first:
