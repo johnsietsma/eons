@@ -1428,6 +1428,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400188}
+  - 114: {fileID: 11400020}
   m_Layer: 0
   m_Name: Avatar
   m_TagString: Untagged
@@ -3188,6 +3189,19 @@ MonoBehaviour:
     type: 2}
   material_MeshDistort_CA: {fileID: 2100000, guid: 0a1b4ff444b43964fa1d98bfb4523d81,
     type: 2}
+--- !u!114 &11400020
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c01f66b02a27f4217ac8f0a0a6e34ec4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gazeToFollow: {fileID: 11400014}
+  followingTransform: {fileID: 400168}
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1
