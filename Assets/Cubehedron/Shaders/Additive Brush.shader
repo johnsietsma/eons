@@ -3,13 +3,13 @@
 		_MainTex ("Base (RGB)", 2D) = "white" {}
 	}
 	SubShader {
-		Tags { "RenderType"="Opaque" }
+		Tags { "Queue"="Transparent" "RenderType"="Transparent" }
 		LOD 200
-	  	Blend One One
+		BlendOp Sub
 
 
 		CGPROGRAM
-		#pragma surface surf Lambert
+		#pragma surface surf Lambert alpha
 
 		sampler2D _MainTex;
 
@@ -20,7 +20,7 @@
 		void surf (Input IN, inout SurfaceOutput o) {
 			half4 c = tex2D (_MainTex, IN.uv_MainTex);
 			o.Albedo = c.rgb;
-			o.Alpha = c.a;
+			o.Alpha = lerp(0,1,c.r);
 		}
 		ENDCG
 	}

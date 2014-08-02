@@ -6,6 +6,7 @@ public class RenderTexturePainter : MonoBehaviour
     [SerializeField] private Texture2D brushTex;
     [SerializeField] private Vector2 brushUVSize;
     [SerializeField] private Material brushMaterial;
+    [SerializeField] private string shaderTexturePropertyName = "_MainTex";
 
     [HideInInspector]
     public List<Vector3> positionsUV;
@@ -25,7 +26,7 @@ public class RenderTexturePainter : MonoBehaviour
             brushUVSize.Scale( renderTextureSize );
         }
 
-        renderTextureBilter = new RenderTextureBliter( renderer.material, "_MainTex", brushUVSize, renderTextureSize, bounds, brushMaterial );
+        renderTextureBilter = new RenderTextureBliter( renderer.material, shaderTexturePropertyName, brushUVSize, renderTextureSize, bounds, brushMaterial );
     }
 
     private Bounds GetBounds()

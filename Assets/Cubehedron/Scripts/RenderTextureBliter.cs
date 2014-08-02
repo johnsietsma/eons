@@ -37,22 +37,20 @@ public class RenderTextureBliter
         _brushMaterial = brushMaterial;
 
         // Render the current material onto the new RenderTexture and then swap the RT in.
-        //var mat = renderer.material;
-        //Graphics.Blit( mat.mainTexture, _destinationRenderTexture, mat );
+        var mat = rendererMaterial;
+        Graphics.Blit( mat.mainTexture, _destinationRenderTexture, mat );
         rendererMaterial.SetTexture( textureName, _destinationRenderTexture );
 
         _brushSize = brushSize;
 
         Debug.Log( "Brush size: " + _brushSize.ToStringf() );
 
-        ClearTexture();
+        //ClearTexture( rendererMaterial.GetTexture( textureName ) );
     }
 
-    public void ClearTexture()
+    public void ClearTexture( Texture clearTex )
     {
-        var clearTex = new Texture2D( 1, 1, TextureFormat.ARGB32, false );
-        clearTex.SetPixel( 0, 0, clearColor );
-        clearTex.Apply();
+        D.Assert( clearTex!=null );
         Graphics.Blit( clearTex, _destinationRenderTexture );
     }
 
