@@ -59,19 +59,19 @@ Material:
       data:
         first:
           name: _InkCutoff
-        second: .532142878
+        second: .639285743
       data:
         first:
           name: _EdgeWobbleFactor
-        second: 20
+        second: 6
       data:
         first:
           name: _TurbulenceFactor
-        second: 3.1099999
+        second: .400000006
       data:
         first:
           name: _PigmentDispertionFactor
-        second: .620000005
+        second: 2.5
     m_Colors:
       data:
         first:

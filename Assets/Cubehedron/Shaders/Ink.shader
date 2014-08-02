@@ -15,6 +15,7 @@
 
 		CGPROGRAM
 		#pragma surface surf Ink
+		#pragma target 3.0
 
 		sampler2D _MainTex;
 		fixed4 _InkColor;
@@ -75,6 +76,9 @@
 	    	    }
 	        }
 
+	        // Simple Lambert
+	        fixed lightValue = (normalLight * atten * 2);
+	        c.rgb = c.rgb * s.Albedo * _LightColor0.rgb * atten * 2;
 
 	    	return c;
 	    }
@@ -94,5 +98,6 @@
 		}
 		ENDCG
 	}
-	FallBack "Diffuse"
+	Fallback "VertexLit"
+	//FallBack "Diffuse"
 }
