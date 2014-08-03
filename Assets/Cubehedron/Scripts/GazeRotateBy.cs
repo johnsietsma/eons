@@ -7,23 +7,18 @@ public class GazeRotateBy : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private Space space;
 
-    private bool hasGaze;
-
-    void Update()
-    {
-        if ( hasGaze ) {
-            var r = rotation * Time.deltaTime * speed;
-            transform.Rotate( r, space );
-        }
-    }
-
     public void OnGazeEnter( GazeHit hit )
     {
-        hasGaze = true;
+        iTween.RotateBy( gameObject, iTween.Hash(
+            "amount", rotation,
+            "speed", speed,
+            "space", space,
+            "islocal", true
+            ));
     }
 
     public void OnGazeExit( GazeHit hit )
     {
-        hasGaze = false;
+        iTween.Stop( "rotate" );
     }
 }
