@@ -4,10 +4,10 @@
 		_InkColor ("Ink Color", Color) = (0,0,0,0)
 		_InkCutoff ("Ink Cutoff", Range(0,1)) = 0.5
 		_NoiseTex ("Noise Tex", 2D) = "white" {}
-		_EdgeWobbleFactor ("Edge Wobble Factor", Float) = 2
+		_EdgeWobbleFactor ("Edge Wobble Factor", Range(0,1)) = 0.1
 		_TurbulenceTex ("Turbulence", 2D) = "white"
-		_TurbulenceFactor ("Turbulence Factor", Float) = 2
-		_PigmentDispertionFactor ("Pigment Dispersion Factor", Float) = 2
+		_TurbulenceFactor ("Turbulence Factor", Float) = 0.1
+		_PigmentDispertionFactor ("Pigment Dispersion Factor", Float) = 0.1
 	}
 	SubShader {
 		Tags { "RenderType"="Opaque" }
@@ -50,7 +50,7 @@
 	        fixed noise = tex2D(_NoiseTex,s.uv ).r;
 
 	        // The higher the factor, the less random variation
-	        fixed wobble = pow( noise, _EdgeWobbleFactor );
+	        fixed wobble = (noise-0.5) * _EdgeWobbleFactor;
 
 	        normalLight += wobble;
 
@@ -60,13 +60,13 @@
 
 	        if( normalLight < _InkCutoff ) {
 	        	// Simulate pigment dispertion with a noise tex to offset uv
-		        fixed pg = pow( noise, _PigmentDispertionFactor );
-		        fixed2 uv2 = s.uv + fixed2(pg,pg);
+		        fixed pg = noise * _PigmentDispertionFactor;
+		        fixed2 uv2 = s.uv + fixed2(pg);
 
 	        	// Simulate ink turbulence by darkening
 	        	fixed t = tex2D(_TurbulenceTex, uv2 ).r;
 	        	t -= 0.5;
-	        	t = pow( t, _TurbulenceFactor );
+	        	t *= _TurbulenceFactor;
 
 	        	c.rgb = lerp( c.rgb, _InkColor, 0.5+t );
 
