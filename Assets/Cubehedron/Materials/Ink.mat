@@ -77,7 +77,7 @@ Material:
       data:
         first:
           name: _EdgeWobbleFactor
-        second: .125
+        second: .196428567
       data:
         first:
           name: _TurbulenceFactor
@@ -89,7 +89,7 @@ Material:
       data:
         first:
           name: _Outline
-        second: .00399999972
+        second: .00249999971
     m_Colors:
       data:
         first:

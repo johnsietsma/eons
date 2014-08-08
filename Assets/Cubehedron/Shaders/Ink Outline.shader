@@ -8,8 +8,7 @@
 		_InkColor ("Ink Color", Color) = (0,0,0,0)
 		_InkCutoff ("Ink Cutoff", Float) = 0.5
 		_InkRamp ("Ink Ramp", 2D) = "black"
-		_NoiseTex ("Noise Tex", 2D) = "white" {}
-		_EdgeWobbleFactor ("Edge Wobble Factor", Range(0,1)) = 0.1
+		_EdgeWobbleFactor ("Edge Wobble Factor", Float) = 0.1
 		_TurbulenceTex ("Turbulence", 2D) = "white"
 		_TurbulenceFactor ("Turbulence Factor", Float) = 0.1
 		_PigmentDispertionFactor ("Pigment Dispersion Factor", Float) = 0.1
