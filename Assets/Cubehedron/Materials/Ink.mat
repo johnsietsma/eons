@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Ink
-  m_Shader: {fileID: 4800000, guid: 96793f97fa62d46cb957a53035bac267, type: 3}
+  m_Shader: {fileID: 4800000, guid: 40194276f9ea341ab8de6e393b955ca4, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -17,7 +17,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 6205c27cc031f4e66b8ea90d1bfaa158, type: 3}
+          m_Texture: {fileID: 2800000, guid: 425f277dd4d4a4f2e9fa461c412f70ce, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -45,33 +45,51 @@ Material:
         first:
           name: _TurbulenceTex
         second:
-          m_Texture: {fileID: 2800000, guid: 49ce010227af634429be348267728353, type: 3}
+          m_Texture: {fileID: 2800000, guid: 55ca0759c041349dfb29e57491265a84, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
           name: _NoiseTex
         second:
-          m_Texture: {fileID: 2800000, guid: 1b24fe5573aad4943aefd52bba676319, type: 3}
+          m_Texture: {fileID: 2800000, guid: 55ca0759c041349dfb29e57491265a84, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _InkRamp
+        second:
+          m_Texture: {fileID: 2800000, guid: 704a140bc9ba341e7ab6edc781d81c31, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _ToonShade
+        second:
+          m_Texture: {fileID: 8900000, guid: b995d4bd9d11078d11005b9844295342, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
           name: _InkCutoff
-        second: .639285743
+        second: .709999979
       data:
         first:
           name: _EdgeWobbleFactor
-        second: .196428567
+        second: .125
       data:
         first:
           name: _TurbulenceFactor
-        second: .189999998
+        second: .170000002
       data:
         first:
           name: _PigmentDispertionFactor
-        second: .560000002
+        second: 1.28999996
+      data:
+        first:
+          name: _Outline
+        second: .00399999972
     m_Colors:
       data:
         first:
@@ -80,4 +98,8 @@ Material:
       data:
         first:
           name: _InkColor
-        second: {r: .0661764741, g: .0496323556, b: .0496323556, a: 1}
+        second: {r: .404411793, g: .333045006, b: .333045006, a: 1}
+      data:
+        first:
+          name: _OutlineColor
+        second: {r: .242647052, g: .235510379, b: .235510379, a: 1}
