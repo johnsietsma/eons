@@ -3,6 +3,7 @@
 		_MainTex ("Base (RGB)", 2D) = "white" {}
 		_InkColor ("Ink Color", Color) = (0,0,0,0)
 		_InkCutoff ("Ink Cutoff", Float) = 0.5
+		_ShadowCutoff ("Shadow Cutoff", Float) = 0.5
 		_InkRamp ("Ink Ramp", 2D) = "black"
 		_EdgeWobbleFactor ("Edge Wobble Factor", Float) = 0.1
 		_TurbulenceTex ("Turbulence", 2D) = "white"
@@ -25,6 +26,7 @@
 		sampler2D _MainTex;
 		fixed4 _InkColor;
 		fixed _InkCutoff;
+		fixed _ShadowCutoff;
 		sampler2D _InkRamp;
 		fixed _EdgeWobbleFactor;
 		sampler2D _TurbulenceTex;
@@ -60,23 +62,28 @@
 	    	fixed shadow = (atten+0.5) * 0.9;
 
 	    	// Prefer self-shadowing to atten light shadows
-	    	if( halfLambert < _InkCutoff ) {
-	    		fixed lNorm = halfLambert*(1/_InkCutoff);
-	    		shadow = tex2D( _InkRamp, fixed2(lNorm) );
+	    	if( halfLambert < _ShadowCutoff || shadow < _InkCutoff ) {
+	    		fixed lNorm = halfLambert*(1/_ShadowCutoff);
+	    		shadow = tex2D( _InkRamp, fixed2(lNorm) ) * atten * 2;
+
+	    		// Simulate pigment dispersion with a noise tex to offset uv
+		    	fixed pg = (turb-0.5) * _PigmentDispertionFactor;
+			    fixed2 uv2 = s.uv + fixed2(pg);
+
+		    	// Simulate ink turbulence by darkening
+		        fixed t = tex2D(_TurbulenceTex, uv2 ).r;
+		        t -= 0.5;
+		        t *= _TurbulenceFactor;
+
+		        shadow += t;
+	    	}
+	    	else {
+	    		shadow = shadow * atten * 2;
+	    		//shadow = tex2D( _InkRamp, fixed2(1-shadow) );
 	    	}
 
-	        // Simulate pigment dispersion with a noise tex to offset uv
-	    	fixed pg = (turb-0.5) * _PigmentDispertionFactor;
-		    fixed2 uv2 = s.uv + fixed2(pg);
 
-	    	// Simulate ink turbulence by darkening
-	        fixed t = tex2D(_TurbulenceTex, uv2 ).r;
-	        t -= 0.5;
-	        t *= _TurbulenceFactor;
-
-	        shadow += t;
-
-	    	c.rgb = shadow * _InkColor;
+	    	c.rgb = shadow * _InkColor * _LightColor0.rgb * s.Albedo;
 	        c.a = s.Alpha;
 
 	    	return c;

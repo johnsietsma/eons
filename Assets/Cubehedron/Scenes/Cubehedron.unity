@@ -7616,16 +7616,16 @@ Light:
   serializedVersion: 3
   m_Type: 1
   m_Color: {r: .992647052, g: .967176497, b: .912359416, a: 1}
-  m_Intensity: .460000008
+  m_Intensity: .400000006
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 1
+    m_Type: 2
     m_Resolution: -1
-    m_Strength: 1
+    m_Strength: .519999981
     m_Bias: .200000003
-    m_Softness: 4
+    m_Softness: 3.06999993
     m_SoftnessFade: 1
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
@@ -12333,7 +12333,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!108 &1535711810
 Light:
   m_ObjectHideFlags: 0
@@ -12349,11 +12349,11 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 1
+    m_Type: 2
     m_Resolution: -1
-    m_Strength: 1
+    m_Strength: .519999981
     m_Bias: .0500000007
-    m_Softness: 4
+    m_Softness: 3.06999993
     m_SoftnessFade: 1
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0

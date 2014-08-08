@@ -7,6 +7,7 @@
 		_MainTex ("Base (RGB)", 2D) = "white" {}
 		_InkColor ("Ink Color", Color) = (0,0,0,0)
 		_InkCutoff ("Ink Cutoff", Float) = 0.5
+		_ShadowCutoff ("Shadow Cutoff", Float) = 0.5
 		_InkRamp ("Ink Ramp", 2D) = "black"
 		_EdgeWobbleFactor ("Edge Wobble Factor", Float) = 0.1
 		_TurbulenceTex ("Turbulence", 2D) = "white"
