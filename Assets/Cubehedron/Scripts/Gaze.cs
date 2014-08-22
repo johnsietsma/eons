@@ -34,7 +34,6 @@ public class Gaze : MonoBehaviour
     void Start()
     {
         UpdateCamera();
-        OVRMessenger.AddListener<OVRMainMenu.Device, bool>( "Sensor_Attached", UpdateDeviceDetectionMsgCallback );
         Screen.showCursor = !hideMousePointer;
     }
 
@@ -84,11 +83,6 @@ public class Gaze : MonoBehaviour
     void OnGizmosSelected()
     {
         Gizmos.DrawRay( GazeTransform.position, GazeTransform.forward );
-    }
-
-    void UpdateDeviceDetectionMsgCallback( OVRMainMenu.Device device, bool attached )
-    {
-        UpdateCamera();
     }
 
     private void UpdateCamera()
