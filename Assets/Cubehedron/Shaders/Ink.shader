@@ -52,7 +52,6 @@
 	        fixed halfDiff = (NdotL*0.5) + 0.5;
 
 	    	fixed turb = tex2D(_TurbulenceTex,s.uv ).r;
-	    	fixed wobble = (turb-0.5) * _EdgeWobbleFactor;
 
 			fixed shadow = (diff * atten * 2);
 
