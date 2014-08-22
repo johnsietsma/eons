@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Ink
-  m_Shader: {fileID: 4800000, guid: 40194276f9ea341ab8de6e393b955ca4, type: 3}
+  m_Shader: {fileID: 4800000, guid: 96793f97fa62d46cb957a53035bac267, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -59,7 +59,7 @@ Material:
         first:
           name: _InkRamp
         second:
-          m_Texture: {fileID: 2800000, guid: 704a140bc9ba341e7ab6edc781d81c31, type: 3}
+          m_Texture: {fileID: 2800000, guid: bbc7599bb21c44b3897d8916cc5b1ffc, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -85,7 +85,7 @@ Material:
       data:
         first:
           name: _PigmentDispertionFactor
-        second: 0
+        second: 1.38999999
       data:
         first:
           name: _Outline

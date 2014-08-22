@@ -46,6 +46,29 @@
 		};
 
 	    half4 LightingInk (SurfaceOutputUV s, half3 lightDir, half3 viewDir, half atten) {
+   	        fixed NdotL = dot (s.Normal, lightDir);
+
+			fixed diff = max (0, NdotL);
+	        fixed halfDiff = (NdotL*0.5) + 0.5;
+
+	    	fixed turb = tex2D(_TurbulenceTex,s.uv ).r;
+	    	fixed wobble = (turb-0.5) * _EdgeWobbleFactor;
+
+			fixed shadow = (diff * atten * 2);
+
+			fixed4 c;
+			c.rgb = s.Albedo * _LightColor0.rgb * shadow;
+			c.a = s.Alpha;
+
+			fixed pg = (turb-0.5) * _PigmentDispertionFactor;
+			fixed2 uv2 = s.uv + fixed2(pg);
+
+	    	c.rgb -= (1-shadow) * tex2D( _TurbulenceTex, uv2 ).rgb;
+
+			return c;
+		}
+
+	    half4 LightingInkOld (SurfaceOutputUV s, half3 lightDir, half3 viewDir, half atten) {
 	    	fixed4 c;
 	        fixed NdotL = dot (s.Normal, lightDir);
 
