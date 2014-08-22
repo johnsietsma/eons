@@ -59,12 +59,12 @@
 	    	halfLambert += wobble;
 
 	        // Make the shadows we get from atten brighter.
-	    	fixed shadow = (atten+0.5) * 0.9;
+	    	fixed shadow = (atten+0.5) * 0.5;
 
 	    	// Prefer self-shadowing to atten light shadows
 	    	if( halfLambert < _ShadowCutoff || shadow < _InkCutoff ) {
-	    		fixed lNorm = halfLambert*(1/_ShadowCutoff);
-	    		shadow = tex2D( _InkRamp, fixed2(lNorm) ) * atten * 2;
+	    		fixed lNorm = (halfLambert-_ShadowCutoff)*(1/_ShadowCutoff);
+	    		shadow = tex2D( _InkRamp, fixed2(0.5,0.5) );// * atten * 2;
 
 	    		// Simulate pigment dispersion with a noise tex to offset uv
 		    	fixed pg = (turb-0.5) * _PigmentDispertionFactor;
@@ -75,7 +75,9 @@
 		        t -= 0.5;
 		        t *= _TurbulenceFactor;
 
-		        shadow += t;
+		        //shadow += t;
+
+		        //shadow = lNorm;
 	    	}
 	    	else {
 	    		shadow = shadow * atten * 2;
@@ -83,7 +85,7 @@
 	    	}
 
 
-	    	c.rgb = shadow * _InkColor * _LightColor0.rgb * s.Albedo;
+	    	c.rgb = shadow;// * _InkColor * _LightColor0.rgb * s.Albedo;
 	        c.a = s.Alpha;
 
 	    	return c;

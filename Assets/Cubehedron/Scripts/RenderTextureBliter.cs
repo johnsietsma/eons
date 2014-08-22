@@ -45,7 +45,7 @@ public class RenderTextureBliter
 
         Debug.Log( "Brush size: " + _brushSize.ToStringf() );
 
-        //ClearTexture( rendererMaterial.GetTexture( textureName ) );
+        ClearTexture( rendererMaterial.GetTexture( textureName ) );
     }
 
     public void ClearTexture( Texture clearTex )
