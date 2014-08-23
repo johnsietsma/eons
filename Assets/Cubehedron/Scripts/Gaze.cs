@@ -31,6 +31,9 @@ public class Gaze : MonoBehaviour
     [SerializeField] private bool hideMousePointer;
     [SerializeField] private bool debug;
 
+    private Vector3 originalBoundsSize;
+    private static readonly RaycastHit DefaultRaycastHit = new RaycastHit();
+
     void Start()
     {
         UpdateCamera();
@@ -40,43 +43,32 @@ public class Gaze : MonoBehaviour
     void Update ()
     {
         RaycastHit hit;
-        GameObject newCurrentGazeObject;
+        GameObject newGazeObject = null;
+        RaycastHit newRaycastHit = DefaultRaycastHit;
 
         if ( Physics.Raycast( GazeTransform.position, GazeTransform.forward, out hit, Mathf.Infinity, gazeLayerMask  ) ) {
-            CurrentGazeHit = hit;
-            newCurrentGazeObject = hit.transform.gameObject;
-
-        }
-        else {
-            CurrentGazeHit = new RaycastHit();
-            newCurrentGazeObject = null;
+            newRaycastHit = hit;
+            newGazeObject = hit.transform.gameObject;
         }
 
-        bool newGazeObject = CurrentGazeObject != newCurrentGazeObject;
+        bool isNewGazeObject = CurrentGazeObject != newGazeObject;
 
-        var gazeHit = new GazeHit() {
-            gaze = this,
-            hit = hit
-        };
+        GazeHit gazeHit;
+        gazeHit.gaze = this;
+        gazeHit.hit = newRaycastHit;
 
         // Exit the current gaze object
-        if ( newGazeObject && CurrentGazeObject != null ) {
-            CurrentGazeObject.SendMessage( GazeExitMessage, gazeHit, SendMessageOptions.DontRequireReceiver );
-            if ( debug ) { D.Log( "GazeExit: {0}", CurrentGazeObject.name ); }
+        if ( isNewGazeObject && CurrentGazeObject != null ) {
+            DoGazeExit( gazeHit );
         }
 
-        CurrentGazeObject = newCurrentGazeObject;
-
         if ( CurrentGazeObject != null ) {
-            CurrentGazeObject.SendMessage( GazeStayMessage, gazeHit, SendMessageOptions.DontRequireReceiver );
-            if ( debug ) { D.Log( "GazeStay: {0}", CurrentGazeObject.name ); }
+            DoGazeStay( gazeHit );
         }
 
         // Switch to the new object
-        if ( newGazeObject && CurrentGazeObject != null ) {
-            // Enter the new gaze object
-            CurrentGazeObject.SendMessage( GazeEnterMessage, gazeHit, SendMessageOptions.DontRequireReceiver );
-            if ( debug ) { D.Log( "GazeEnter: {0}", CurrentGazeObject.name ); }
+        if ( isNewGazeObject && newGazeObject != null ) {
+            DoGazeEnter( newGazeObject, gazeHit );
         }
     }
 
@@ -84,6 +76,43 @@ public class Gaze : MonoBehaviour
     {
         Gizmos.DrawRay( GazeTransform.position, GazeTransform.forward );
     }
+
+    private void DoGazeEnter( GameObject newGazeObject, GazeHit gazeHit )
+    {
+        CurrentGazeObject = newGazeObject;
+        CurrentGazeHit = gazeHit.hit;
+
+        BoxCollider bc = CurrentGazeHit.collider as BoxCollider;
+        if ( bc != null ) {
+            originalBoundsSize = bc.size;
+            bc.size = bc.size * 2;
+        }
+
+        // Enter the new gaze object
+        CurrentGazeObject.SendMessage( GazeEnterMessage, gazeHit, SendMessageOptions.DontRequireReceiver );
+        if ( debug ) { D.Log( "GazeEnter: {0}", CurrentGazeObject.name ); }
+    }
+
+    private void DoGazeStay( GazeHit gazeHit )
+    {
+        CurrentGazeObject.SendMessage( GazeStayMessage, gazeHit, SendMessageOptions.DontRequireReceiver );
+        if ( debug ) { D.Log( "GazeStay: {0}", CurrentGazeObject.name ); }
+    }
+
+    private void DoGazeExit( GazeHit gazeHit )
+    {
+        CurrentGazeObject.SendMessage( GazeExitMessage, gazeHit, SendMessageOptions.DontRequireReceiver );
+        if ( debug ) { D.Log( "GazeExit: {0}", CurrentGazeObject.name ); }
+
+        BoxCollider bc = CurrentGazeHit.collider as BoxCollider;
+        if ( bc ) {
+            bc.size = originalBoundsSize;
+        }
+
+        CurrentGazeObject = null;
+        CurrentGazeHit = DefaultRaycastHit;
+    }
+
 
     private void UpdateCamera()
     {
