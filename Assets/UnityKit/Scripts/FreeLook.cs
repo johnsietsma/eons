@@ -16,14 +16,14 @@ public class FreeLook : MonoBehaviour
 
     void Update ()
     {
-        Quaternion rot = cam.transform.rotation;
         cam.transform.rotation = startRot;
+        cam.fieldOfView = 90;
         var screenPos = Input.mousePosition;
         screenPos.z = cam.nearClipPlane;
         Vector3 p = cam.ScreenToWorldPoint( screenPos );
-        cam.transform.rotation = rot;
+        cam.fieldOfView = 60;
 
-        cam.transform.LookAt( p );
+        transform.LookAt( p );
 
     }
 }

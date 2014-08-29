@@ -6,12 +6,19 @@ public class GazeUVShifter : MonoBehaviour
     [SerializeField] private Material offsetMaterial;
     [SerializeField] private Vector2 uvOffsetPerSecond;
 
+    private Vector2 startOffset;
     private Vector2 currentOffset;
     private bool hasGaze = false;
 
     void Awake()
     {
         currentOffset = offsetMaterial.mainTextureOffset;
+        startOffset = currentOffset;
+    }
+
+    void OnDestroy()
+    {
+        offsetMaterial.mainTextureOffset = startOffset; // Put it back like we found it, stop asset changes.
     }
 
     void Update()

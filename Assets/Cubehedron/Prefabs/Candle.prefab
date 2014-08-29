@@ -13,6 +13,7 @@ GameObject:
   - 114: {fileID: 11400000}
   - 114: {fileID: 11400004}
   - 114: {fileID: 11400006}
+  - 114: {fileID: 11400008}
   m_Layer: 9
   m_Name: Candle
   m_TagString: Untagged
@@ -157,9 +158,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .175628111, y: 1.31646633, z: .240510046}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -.493173748, y: .506734312, z: .506735206, w: -.493172884}
+  m_LocalPosition: {x: .137995809, y: -.00374424038, z: .203312784}
+  m_LocalScale: {x: .312526822, y: .312526792, z: .312527061}
   m_Children:
   - {fileID: 400012}
   - {fileID: 400002}
@@ -379,7 +380,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d41ab4483f084c70bde22433d5b5487, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particlesParentObject: {fileID: 100002}
+  undoOnExit: 0
+  particlesParentObject: {fileID: 100012}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -406,12 +408,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d516068128d244fc82685ad6a968894, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playBackwardsOnExit: 0
+  undoOnExit: 0
   gazeLight: {fileID: 10800000}
   lightToParams:
     color: {r: .907355905, g: .948529422, b: .202259973, a: .945098042}
     intensity: 6
-    range: 3
+    range: .600000024
   time: 2
 --- !u!114 &11400006
 MonoBehaviour:
@@ -424,9 +426,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca7d91a8a198f4fd4a5c43ccdbe7f589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playBackwardsOnExit: 0
-  ambientColorTo: {r: 1, g: .7580688, b: .103698075, a: 0}
+  undoOnExit: 0
+  ambientColorTo: {r: .196078435, g: .196078435, b: 0, a: .196078435}
   time: 1
+--- !u!114 &11400008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d41ab4483f084c70bde22433d5b5487, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  undoOnExit: 1
+  particlesParentObject: {fileID: 100002}
 --- !u!198 &19800000
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -2563,7 +2578,7 @@ ParticleSystem:
   randomSeed: 0
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   moveWithTransform: 1
   InitialModule:
     enabled: 1
