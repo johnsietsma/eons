@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Ink
-  m_Shader: {fileID: 4800000, guid: 96793f97fa62d46cb957a53035bac267, type: 3}
+  m_Shader: {fileID: 4800000, guid: cdb62354f4e39471491668966ce13094, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -73,19 +73,19 @@ Material:
       data:
         first:
           name: _InkCutoff
-        second: .600000024
+        second: .620000005
       data:
         first:
           name: _EdgeWobbleFactor
-        second: 0
+        second: .170000002
       data:
         first:
           name: _TurbulenceFactor
-        second: 0
+        second: .200000003
       data:
         first:
           name: _PigmentDispertionFactor
-        second: 1.38999999
+        second: .200000003
       data:
         first:
           name: _Outline
@@ -93,7 +93,7 @@ Material:
       data:
         first:
           name: _ShadowCutoff
-        second: .699999988
+        second: .360000014
     m_Colors:
       data:
         first:
@@ -102,7 +102,7 @@ Material:
       data:
         first:
           name: _InkColor
-        second: {r: .404411793, g: .333045006, b: .333045006, a: 1}
+        second: {r: .389705896, g: .249297157, b: .249297157, a: 1}
       data:
         first:
           name: _OutlineColor

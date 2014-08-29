@@ -4,6 +4,7 @@ using System.Collections;
 public class GazeUVShifter : MonoBehaviour
 {
     [SerializeField] private Material offsetMaterial;
+    [SerializeField] private string texturePropertyName = "_MainTex";
     [SerializeField] private Vector2 uvOffsetPerSecond;
 
     private Vector2 startOffset;
@@ -25,7 +26,7 @@ public class GazeUVShifter : MonoBehaviour
     {
         if( hasGaze ) {
             currentOffset += uvOffsetPerSecond * Time.deltaTime;
-            offsetMaterial.mainTextureOffset = currentOffset;
+            offsetMaterial.SetTextureOffset( texturePropertyName, currentOffset );
         }
     }
 
