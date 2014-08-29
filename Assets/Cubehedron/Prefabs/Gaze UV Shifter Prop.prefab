@@ -12,6 +12,7 @@ GameObject:
   - 114: {fileID: 11400000}
   - 114: {fileID: 11400002}
   - 82: {fileID: 8200000}
+  - 114: {fileID: 11400004}
   m_Layer: 9
   m_Name: Gaze UV Shifter Prop
   m_TagString: Untagged
@@ -43,7 +44,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: 2, z: 3}
+  m_LocalPosition: {x: -2, y: 2, z: 5.80013847}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400002}
@@ -55,7 +56,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: -1.62920685e-07}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: .200000003}
   m_Children: []
@@ -73,7 +74,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: fff3955423c6f49b2968f6ddc012586b, type: 2}
+  - {fileID: 2100000, guid: a4e5bb1f1c44f4e728bfbbdaa61d9e12, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -169,8 +170,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe43b62f5cf2c44d09508be3aacaeafb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offsetMaterial: {fileID: 2100000, guid: fff3955423c6f49b2968f6ddc012586b, type: 2}
-  uvOffsetPerSecond: {x: .100000001, y: .100000001}
+  offsetMaterial: {fileID: 2100000, guid: a4e5bb1f1c44f4e728bfbbdaa61d9e12, type: 2}
+  texturePropertyName: _MainTex
+  uvOffsetPerSecond: {x: -.100000001, y: 0}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -183,6 +185,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gazeAudio: {fileID: 8300000, guid: 0f973b6b257b0b445941080f05d7eaef, type: 3}
+--- !u!114 &11400004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe43b62f5cf2c44d09508be3aacaeafb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offsetMaterial: {fileID: 2100000, guid: a4e5bb1f1c44f4e728bfbbdaa61d9e12, type: 2}
+  texturePropertyName: _OverlayTex
+  uvOffsetPerSecond: {x: -.200000003, y: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
