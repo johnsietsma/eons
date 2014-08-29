@@ -13,13 +13,13 @@ public class GazeUVShifter : MonoBehaviour
 
     void Awake()
     {
-        currentOffset = offsetMaterial.mainTextureOffset;
+        currentOffset = offsetMaterial.GetTextureOffset( texturePropertyName );
         startOffset = currentOffset;
     }
 
     void OnDestroy()
     {
-        offsetMaterial.mainTextureOffset = startOffset; // Put it back like we found it, stop asset changes.
+        offsetMaterial.SetTextureOffset( texturePropertyName, startOffset ); // Put it back like we found it, stop asset changes.
     }
 
     void Update()
