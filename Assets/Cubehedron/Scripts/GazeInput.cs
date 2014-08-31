@@ -3,10 +3,10 @@ using System.Collections;
 
 
 /**
- * Mimics the gaze of of an object.
+ * Mimics the gaze of an object.
  * Provides events for gazing at objects and hit information about the gaze.
  */
-public class Gaze : MonoBehaviour
+public class GazeInput : MonoBehaviour
 {
     public static readonly string GazeEnterMessage = "OnGazeEnter";
     public static readonly string GazeStayMessage = "OnGazeStay";
@@ -54,7 +54,7 @@ public class Gaze : MonoBehaviour
         bool isNewGazeObject = CurrentGazeObject != newGazeObject;
 
         GazeHit gazeHit;
-        gazeHit.gaze = this;
+        gazeHit.gazeInput = this;
         gazeHit.hit = newRaycastHit;
 
         // Exit the current gaze object
@@ -77,11 +77,18 @@ public class Gaze : MonoBehaviour
         Gizmos.DrawRay( GazeTransform.position, GazeTransform.forward );
     }
 
+    public override string ToString()
+    {
+        return string.Format( "GazeInput - Name:{0} Camera Name:{1}", name, CurrentCamera.name );
+    }
+
     private void DoGazeEnter( GameObject newGazeObject, GazeHit gazeHit )
     {
         CurrentGazeObject = newGazeObject;
         CurrentGazeHit = gazeHit.hit;
 
+        // Fudge: Make the collision area bigger to make it easier to keep the gaze.
+        // There is probably a more graceful way of doing this.
         BoxCollider bc = CurrentGazeHit.collider as BoxCollider;
         if ( bc != null ) {
             originalBoundsSize = bc.size;

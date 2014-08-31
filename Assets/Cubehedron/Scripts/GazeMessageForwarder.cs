@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+ * Forward messages from the GazeInput to another object.
+ */
 public class GazeMessageForwarder : MonoBehaviour
 {
     [SerializeField] private GameObject messageReceiver;
-    [SerializeField] private string GazeEnterMessage = Gaze.GazeEnterMessage;
-    [SerializeField] private string GazeExitMessage = Gaze.GazeExitMessage;
+    [SerializeField] private string GazeEnterMessage = GazeInput.GazeEnterMessage;
+    [SerializeField] private string GazeExitMessage = GazeInput.GazeExitMessage;
 
     void Awake()
     {

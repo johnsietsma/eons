@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GazeExamine : MonoBehaviour
 {
-    [SerializeField] private Gaze gaze;
+    [SerializeField] private GazeInput gazeInput;
     [SerializeField] private float examineRadius;
     [SerializeField] private float speed;
     [SerializeField] private Vector3 examineOffset;
@@ -20,10 +20,10 @@ public class GazeExamine : MonoBehaviour
     public void OnGazeEnter( GazeHit hit )
     {
         if ( !enabled ) { return; }
-        var pos = gaze.GazeTransform.forward * examineRadius;
+        var pos = gazeInput.GazeTransform.forward * examineRadius;
 
         iTween.MoveTo( gameObject, iTween.Hash(
-                           "position", gaze.GazeTransform.position + pos + examineOffset,
+                           "position", gazeInput.GazeTransform.position + pos + examineOffset,
                            "speed", speed,
                            "space", Space.World
                        ) );

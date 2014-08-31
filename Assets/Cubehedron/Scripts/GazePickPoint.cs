@@ -16,12 +16,12 @@ public class GazePickPoint : MonoBehaviour
     /**
      * Find a point in the center of the prop that is under the gaze ray.
      */
-    public Vector3 GetPickPoint( Gaze gaze )
+    public Vector3 GetPickPoint( GazeInput gazeInput )
     {
         // The horizontal plane that goes through the center of the prop.
         var propPlane = new Plane( transform.up, propBounds.center );
 
-        var gazeRay = new Ray( gaze.GazeTransform.position, gaze.GazeTransform.forward );
+        var gazeRay = new Ray( gazeInput.GazeTransform.position, gazeInput.GazeTransform.forward );
 
         float rayDistance;
         Vector3 pickPoint = Vector3.zero;

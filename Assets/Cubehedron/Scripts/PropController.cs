@@ -9,7 +9,7 @@ public class PropController : MonoBehaviour
     [SerializeField] private MoveToParams idleMoveToParams;
     [SerializeField] private MoveToParams selectMoveToParams;
 
-    private Gaze currentGaze;
+    private GazeInput currentGazeInput;
     private GazePickPoint gazePickPoint;
 
     void Awake()
@@ -21,19 +21,19 @@ public class PropController : MonoBehaviour
 
     public Vector3 GetPickPoint()
     {
-        if ( currentGaze == null ) { return Vector3.zero; }
-        return gazePickPoint.GetPickPoint( currentGaze );
+        if ( currentGazeInput == null ) { return Vector3.zero; }
+        return gazePickPoint.GetPickPoint( currentGazeInput );
     }
 
     public void OnGazeEnter( GazeHit hit )
     {
-        currentGaze = hit.gaze;
+        currentGazeInput = hit.gazeInput;
         DoSelect();
     }
 
     public void OnGazeExit( GazeHit hit )
     {
-        currentGaze = null;
+        currentGazeInput = null;
         DoIdle();
     }
 

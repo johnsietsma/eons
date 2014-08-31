@@ -7,14 +7,14 @@ using System.Collections;
 public class GazeGuidance : MonoBehaviour
 {
     [Tooltip( "Optional: Find a gaze object in the scene if not set." )]
-    [SerializeField] private Gaze gaze;
+    [SerializeField] private GazeInput gazeInput;
 
     [SerializeField] private GameObject gazePointer;
 
     void Awake()
     {
-        if ( gaze == null ) {
-            gaze = FindObjectOfType( typeof( Gaze ) ) as Gaze;
+        if ( gazeInput == null ) {
+            gazeInput = FindObjectOfType( typeof( GazeInput ) ) as GazeInput;
         }
 
         D.Assert( gazePointer, "Please set the gaze pointer" );
@@ -22,17 +22,17 @@ public class GazeGuidance : MonoBehaviour
 
     void Update ()
     {
-        if ( gaze.CurrentCamera == null ) { return; }
+        if ( gazeInput.CurrentCamera == null ) { return; }
 
-        var gazeCamTransform = gaze.CurrentCamera.transform;
+        var gazeCamTransform = gazeInput.CurrentCamera.transform;
         transform.position = gazeCamTransform.position;
         transform.rotation = gazeCamTransform.rotation;
 
-        if ( gaze.CurrentGazeHit.collider != null ) {
+        if ( gazeInput.CurrentGazeHit.collider != null ) {
             if ( !gazePointer.activeInHierarchy ) {
                 gazePointer.SetActive( true );
             }
-            gazePointer.transform.position = gaze.CurrentGazeHit.point;
+            gazePointer.transform.position = gazeInput.CurrentGazeHit.point;
         }
         else {
             if ( gazePointer.activeInHierarchy ) {

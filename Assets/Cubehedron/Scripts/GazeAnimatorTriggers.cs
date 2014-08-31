@@ -5,8 +5,8 @@ public class GazeAnimatorTriggers : MonoBehaviour
 {
     [Tooltip( "The animator to set the triggers on. If not sute, use the Animator on this object." )]
     [SerializeField] private Animator gazeAnimator;
-    [SerializeField] private string GazeEnterTrigger = Gaze.GazeEnterMessage;
-    [SerializeField] private string GazeExitTrigger = Gaze.GazeExitMessage;
+    [SerializeField] private string GazeEnterTrigger = GazeInput.GazeEnterMessage;
+    [SerializeField] private string GazeExitTrigger = GazeInput.GazeExitMessage;
 
     void Awake()
     {

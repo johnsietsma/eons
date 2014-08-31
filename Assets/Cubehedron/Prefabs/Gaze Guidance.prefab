@@ -156,7 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f53377bd1125b47f8ac2493a071b26d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gaze: {fileID: 0}
+  gazeInput: {fileID: 0}
   gazePointer: {fileID: 100000}
 --- !u!119 &11900000
 Projector:
@@ -333,7 +333,7 @@ ParticleSystem:
         rgba: 4294967295
       minMaxState: 0
     startSize:
-      scalar: .5
+      scalar: .100000001
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1345,7 +1345,7 @@ ParticleSystem:
         rgba: 889192447
       minMaxState: 0
     startSize:
-      scalar: 2.1500001
+      scalar: .5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1360,7 +1360,7 @@ ParticleSystem:
         serializedVersion: 2
         m_Curve:
         - time: 0
-          value: .813953459
+          value: .400000006
           inSlope: 0
           outSlope: 0
           tangentMode: 0
