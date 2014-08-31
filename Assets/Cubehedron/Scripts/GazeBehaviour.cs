@@ -3,37 +3,38 @@ using System.Collections;
 
 public abstract class GazeBehaviour : MonoBehaviour
 {
-    public enum ExitBehaviour { Nothing, Stop, Undo };
+    public enum UndoBehaviour { Nothing, Stop, Undo };
 
-    [SerializeField] ExitBehaviour exitBehaviour;
-    [SerializeField] float activateDelay;
+    [SerializeField] UndoBehaviour exitBehaviour;
+    [SerializeField] float delay;
     [SerializeField] bool debug;
 
     private bool isEntered;
-    private bool isActivated;
 
+    // ---- GazeInput messages ----
     public void OnGazeEnter( GazeHit hit )
     {
         if ( !enabled || isEntered ) { return; }
-        DoGazeEnter( hit );
-        isEntered = true;
-        Invoke( "DoGazeActivate", activateDelay );
+        StartCoroutine( "DoGazeEnterInternalCoroutine", hit );
     }
 
     public void OnGazeStay( GazeHit hit )
     {
         if ( !enabled ) { return; }
-        DoGazeStay( hit );
+        DoGazeStayInternal( hit );
     }
 
     public void OnGazeExit( GazeHit hit )
     {
         if ( !enabled ) { return; }
+        StopCoroutine( "DoGazeEnterInternalCoroutine" );
         DoGazeExitInternal( hit );
     }
 
-    protected virtual void DoGazeEnterInternal( GazeHit hit )
+    // ---- Internal handling of GazeInputMessages ----
+    protected virtual IEnumerator DoGazeEnterInternalCoroutine( GazeHit hit )
     {
+        yield return new WaitForSeconds( delay );
         if ( debug ) { D.Log( "DoGazeEnter({0})", hit ); }
         DoGazeEnter( hit );
         isEntered = true;
@@ -49,10 +50,12 @@ public abstract class GazeBehaviour : MonoBehaviour
     {
         if ( debug ) { D.Log( "DoGazeExit({0})", hit ); }
 
-        if ( exitBehaviour == ExitBehaviour.Stop ) { DoGazeStop( hit ); }
-        if ( exitBehaviour == ExitBehaviour.Undo ) { DoGazeExit( hit ); }
-        isEntered = false;
-        if ( !isActivated ) { CancelInvoke( "DoGazeActivate" ); }
+        // Decide how to handle the gaze exit.
+        if ( exitBehaviour == UndoBehaviour.Stop ) { DoGazeStop( hit ); }
+        if ( exitBehaviour == UndoBehaviour.Undo ) { DoGazeExit( hit ); }
+
+        // If there is no exit behaviour we stay "on"
+        if ( exitBehaviour != UndoBehaviour.Nothing ) { isEntered = false; }
     }
 
     protected virtual void DoGazeStopInternal( GazeHit hit )
@@ -60,27 +63,10 @@ public abstract class GazeBehaviour : MonoBehaviour
         if ( debug ) { D.Log( "DoGazeStop({0})", hit ); }
         DoGazeStop( hit );
         isEntered = false;
-        if ( !isActivated ) { CancelInvoke( "DoGazeActivate" ); }
-    }
-
-    protected virtual void DoGazeActivateInternal()
-    {
-        if ( debug ) { D.Log( "DoGazeActivate()" ); }
-        DoGazeActivate();
-        isActivated = true;
-    }
-
-    protected virtual void DoGazeDeactivateInternal()
-    {
-        if ( debug ) { D.Log( "DoGazeDeactivate()" ); }
-        DoGazeActivate();
-        isActivated = false;
     }
 
     protected virtual void DoGazeEnter( GazeHit hit ) {}
     protected virtual void DoGazeStay( GazeHit hit ) {}
     protected virtual void DoGazeExit( GazeHit hit ) {}
     protected virtual void DoGazeStop( GazeHit hit ) {}
-    protected virtual void DoGazeActivate() {}
-    protected virtual void DoGazeDeactivate() {}
 }

@@ -380,8 +380,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d41ab4483f084c70bde22433d5b5487, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  undoOnExit: 0
-  particlesParentObject: {fileID: 100012}
+  exitBehaviour: 2
+  delay: 0
+  debug: 0
+  particlesParentObject: {fileID: 100002}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -393,7 +395,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a9ce682932fb4fefbe3edcbed57e7ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gaze: {fileID: 0}
   examineRadius: 1
   speed: .5
   examineOffset: {x: 0, y: -1, z: 0}
@@ -408,7 +409,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d516068128d244fc82685ad6a968894, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  undoOnExit: 0
+  exitBehaviour: 0
+  delay: 2
+  debug: 0
   gazeLight: {fileID: 10800000}
   lightToParams:
     color: {r: .907355905, g: .948529422, b: .202259973, a: .945098042}
@@ -426,7 +429,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca7d91a8a198f4fd4a5c43ccdbe7f589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  undoOnExit: 0
+  exitBehaviour: 0
+  delay: 2
+  debug: 0
   ambientColorTo: {r: .196078435, g: .196078435, b: 0, a: .196078435}
   time: 1
 --- !u!114 &11400008
@@ -440,8 +445,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d41ab4483f084c70bde22433d5b5487, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  undoOnExit: 1
-  particlesParentObject: {fileID: 100002}
+  exitBehaviour: 0
+  delay: 2
+  debug: 0
+  particlesParentObject: {fileID: 100012}
 --- !u!198 &19800000
 ParticleSystem:
   m_ObjectHideFlags: 1

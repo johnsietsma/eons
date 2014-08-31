@@ -3,29 +3,48 @@ using System.Collections;
 
 public class GazeParticles : GazeBehaviour
 {
-    [Tooltip("Use all particle systems in this object and it's children.")]
+    [Tooltip( "The parent object of all the particles that will be played on gaze enter." )]
     [SerializeField] private GameObject particlesParentObject;
 
-    private ParticleSystem[] particlesSystems;
+    private ParticleSystem[] particleSystems;
 
 
     void Awake()
     {
-        D.Assert( particlesParentObject!=null, "Please set the parent object of the particle ssytem." );
-        particlesSystems = particlesParentObject.GetComponentsInChildren<ParticleSystem>();
+        if ( particlesParentObject != null ) { particleSystems = particlesParentObject.GetComponentsInChildren<ParticleSystem>(); }
     }
 
     protected override void DoGazeEnter( GazeHit hit )
     {
-        foreach( var ps in particlesSystems ) {
-            ps.Play();
-        }
+        PlayParticleSystems( particleSystems );
     }
 
     protected override void DoGazeExit( GazeHit hit )
     {
-        D.Log( "Stop praticles: {0}", name );
-        foreach( var ps in particlesSystems ) {
+        StopParticleSystems( particleSystems );
+    }
+
+    protected override void DoGazeStop( GazeHit hit )
+    {
+        StopParticleSystems( particleSystems );
+    }
+
+    void PlayParticleSystems( ParticleSystem[] particleSystems )
+    {
+        if ( particleSystems == null ) { return; }
+        ParticleSystem ps = null;
+        for ( int i = 0; i < particleSystems.Length; i++ ) {
+            ps = particleSystems[i];
+            ps.Play();
+        }
+    }
+
+    void StopParticleSystems( ParticleSystem[] particleSystems )
+    {
+        if ( particleSystems == null ) { return; }
+        ParticleSystem ps = null;
+        for ( int i = 0; i < particleSystems.Length; i++ ) {
+            ps = particleSystems[i];
             ps.Stop();
         }
     }

@@ -12,27 +12,39 @@ public class GazeAmbientLightBy : GazeBehaviour
     {
         startColor = RenderSettings.ambientLight;
         iTween.ValueTo( gameObject, iTween.Hash(
+                            "name", "lerpAmbientColor",
                             "from", 0,
                             "to", 1,
                             "time", time,
-                            "onupdate", "LerpAmbientLight"
+                            "onupdate", "LerpAmbientColorOn"
                         )
                       );
     }
 
     protected override void DoGazeExit( GazeHit hit )
     {
+        startColor = RenderSettings.ambientLight;
         iTween.ValueTo( gameObject, iTween.Hash(
-                            "from", 1,
-                            "to", 0,
+                            "from", 0,
+                            "to", 1,
                             "time", time,
-                            "onupdate", "LerpAmbientLight"
+                            "onupdate", "LerpAmbientColorOff"
                         )
                       );
     }
 
-    private void LerpAmbientLight( float value )
+    protected override void DoGazeStop( GazeHit hit )
+    {
+        iTween.StopByName( gameObject, "lerpAmbientColor" );
+    }
+
+    private void LerpAmbientLightOn( float value )
     {
         RenderSettings.ambientLight = Color.Lerp( startColor, startColor + ambientColorBy, value );
+    }
+
+    private void LerpAmbientLightOff( float value )
+    {
+        RenderSettings.ambientLight = Color.Lerp( startColor, startColor - ambientColorBy, value );
     }
 }
