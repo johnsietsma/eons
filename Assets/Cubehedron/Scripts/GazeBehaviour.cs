@@ -34,15 +34,16 @@ public abstract class GazeBehaviour : MonoBehaviour
     // ---- Internal handling of GazeInputMessages ----
     protected virtual IEnumerator DoGazeEnterInternalCoroutine( GazeHit hit )
     {
-        yield return new WaitForSeconds( delay );
+        if ( delay > 0 ) { yield return new WaitForSeconds( delay ); }
         if ( debug ) { D.Log( "DoGazeEnter({0})", hit ); }
         DoGazeEnter( hit );
         isEntered = true;
+        yield return null;
     }
 
     protected virtual void DoGazeStayInternal( GazeHit hit )
     {
-        if ( debug ) { D.Log( "DoGazeStay({0})", hit ); }
+        //if ( debug ) { D.Log( "DoGazeStay({0})", hit ); }
         DoGazeStay( hit );
     }
 
@@ -65,8 +66,15 @@ public abstract class GazeBehaviour : MonoBehaviour
         isEntered = false;
     }
 
+    // When the gaze first hits the object
     protected virtual void DoGazeEnter( GazeHit hit ) {}
+
+    // Every frame while the gaze is on the object
     protected virtual void DoGazeStay( GazeHit hit ) {}
+
+    // When the gaze stops hitting the object, should reverse whatever effects enter had.
     protected virtual void DoGazeExit( GazeHit hit ) {}
+
+    // When the gaze stop hitting the object, should stop whatever changes are underway.
     protected virtual void DoGazeStop( GazeHit hit ) {}
 }

@@ -6,45 +6,28 @@ public class GazeAmbientLightBy : GazeBehaviour
     [SerializeField] private Color ambientColorBy;
     [SerializeField] private float time = 1;
 
-    private Color startColor;
+    private ColorLerper colorLerper;
+    private Color fromColor;
+
+    void Awake()
+    {
+        colorLerper = new ColorLerper( gameObject );
+    }
 
     protected override void DoGazeEnter( GazeHit hit )
     {
-        startColor = RenderSettings.ambientLight;
-        iTween.ValueTo( gameObject, iTween.Hash(
-                            "name", "lerpAmbientColor",
-                            "from", 0,
-                            "to", 1,
-                            "time", time,
-                            "onupdate", "LerpAmbientColorOn"
-                        )
-                      );
+        fromColor = RenderSettings.ambientLight;
+        colorLerper.Lerp( fromColor, fromColor + ambientColorBy, v=>RenderSettings.ambientLight=v, time );
     }
 
     protected override void DoGazeExit( GazeHit hit )
     {
-        startColor = RenderSettings.ambientLight;
-        iTween.ValueTo( gameObject, iTween.Hash(
-                            "from", 0,
-                            "to", 1,
-                            "time", time,
-                            "onupdate", "LerpAmbientColorOff"
-                        )
-                      );
+        var colorDiff = RenderSettings.ambientLight - fromColor;
+        colorLerper.Lerp( RenderSettings.ambientLight, fromColor - colorDiff, v=>RenderSettings.ambientLight=v, time );
     }
 
     protected override void DoGazeStop( GazeHit hit )
     {
-        iTween.StopByName( gameObject, "lerpAmbientColor" );
-    }
-
-    private void LerpAmbientLightOn( float value )
-    {
-        RenderSettings.ambientLight = Color.Lerp( startColor, startColor + ambientColorBy, value );
-    }
-
-    private void LerpAmbientLightOff( float value )
-    {
-        RenderSettings.ambientLight = Color.Lerp( startColor, startColor - ambientColorBy, value );
+        colorLerper.Stop();
     }
 }

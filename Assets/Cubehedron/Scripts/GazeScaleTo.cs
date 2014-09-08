@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GazeScaleTo : MonoBehaviour
+public class GazeScaleTo : GazeBehaviour
 {
     [SerializeField] private Vector3 scale;
     [SerializeField] private float speed;
@@ -19,21 +19,27 @@ public class GazeScaleTo : MonoBehaviour
 
     }
 
-    public void OnGazeEnter( GazeHit hit )
+    protected override void DoGazeEnter( GazeHit hit )
     {
         iTween.ScaleTo( scaleObject, iTween.Hash(
+                            "name", "gazeScaleTo",
                             "scale", scale,
                             "speed", speed
                         )
                       );
     }
 
-    public void OnGazeExit( GazeHit hit )
+    protected override void DoGazeExit( GazeHit hit )
     {
         iTween.ScaleTo( scaleObject, iTween.Hash(
                             "scale", startScale,
                             "speed", speed
                         )
                       );
+    }
+
+    protected override void DoGazeStop( GazeHit hit )
+    {
+        iTween.StopByName( "gazeScaleTo" );
     }
 }

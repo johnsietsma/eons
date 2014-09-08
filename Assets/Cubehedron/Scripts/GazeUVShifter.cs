@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GazeUVShifter : MonoBehaviour
+public class GazeUVShifter : GazeBehaviour
 {
     [SerializeField] private Material offsetMaterial;
     [SerializeField] private string texturePropertyName = "_MainTex";
@@ -30,12 +30,17 @@ public class GazeUVShifter : MonoBehaviour
         }
     }
 
-    public void OnGazeEnter( GazeHit hit )
+    protected override void DoGazeEnter( GazeHit hit )
     {
         hasGaze = true;
     }
 
-    public void OnGazeExit( GazeHit hit )
+    protected override void DoGazeExit( GazeHit hit )
+    {
+        hasGaze = false;
+    }
+
+    protected override void DoGazeStop( GazeHit hit )
     {
         hasGaze = false;
     }

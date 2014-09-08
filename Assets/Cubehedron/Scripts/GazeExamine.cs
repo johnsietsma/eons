@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GazeExamine : MonoBehaviour
+public class GazeExamine : GazeBehaviour
 {
     [SerializeField] private float examineRadius;
     [SerializeField] private float speed;
@@ -15,23 +15,21 @@ public class GazeExamine : MonoBehaviour
         startPos = transform.position;
     }
 
-    public void OnGazeEnter( GazeHit hit )
+    protected override void DoGazeEnter( GazeHit hit )
     {
-        if ( !enabled ) { return; }
         gazeInput = hit.gazeInput;
         var pos = gazeInput.GazeTransform.forward * examineRadius;
 
         iTween.MoveTo( gameObject, iTween.Hash(
+                           "name", "gazeExamine",
                            "position", gazeInput.GazeTransform.position + pos + examineOffset,
                            "speed", speed,
                            "space", Space.World
                        ) );
     }
 
-    public void OnGazeExit( GazeHit hit )
+    protected override void DoGazeExit( GazeHit hit )
     {
-        if ( !enabled ) { return; }
-
         iTween.MoveTo( gameObject, iTween.Hash(
                            "position", startPos,
                            "speed", speed,
@@ -40,4 +38,10 @@ public class GazeExamine : MonoBehaviour
 
         gazeInput = null;
     }
+
+    protected override void DoGazeStop( GazeHit hit )
+    {
+        iTween.StopByName( gameObject, "gazeExamine" );
+    }
+
 }

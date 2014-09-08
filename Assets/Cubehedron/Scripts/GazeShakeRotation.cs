@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GazeShakeRotation : MonoBehaviour
+public class GazeShakeRotation : GazeBehaviour
 {
     [SerializeField] private Vector3 amount;
     [SerializeField] private float speed;
@@ -15,9 +15,10 @@ public class GazeShakeRotation : MonoBehaviour
         if ( shakeObject == null ) { shakeObject = gameObject; }
     }
 
-    public void OnGazeEnter( GazeHit hit )
+    protected override void DoGazeEnter( GazeHit hit )
     {
         iTween.ShakeRotation( shakeObject, iTween.Hash(
+                            "name", "gazeShakeRotation",
                             "amount", amount,
                             "speed", speed,
                             "loopType", loopType
@@ -25,8 +26,13 @@ public class GazeShakeRotation : MonoBehaviour
                       );
     }
 
-    public void OnGazeExit( GazeHit hit )
+    protected override void DoGazeExit( GazeHit hit )
     {
-        iTween.Stop( "shake" );
+        iTween.Stop( "gazeShakeRotation" );
+    }
+
+    protected override void DoGazeStop( GazeHit hit )
+    {
+        iTween.Stop( "gazeShakeRotation" );
     }
 }

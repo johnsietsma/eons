@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GazeAudio : MonoBehaviour
+public class GazeAudio : GazeBehaviour
 {
     [SerializeField] private AudioClip gazeAudio;
 
@@ -10,13 +10,18 @@ public class GazeAudio : MonoBehaviour
         D.Assert( audio!=null, "Gaze audio must have an audio source." );
     }
 
-    public void OnGazeEnter( GazeHit hit )
+    protected override void DoGazeEnter( GazeHit hit )
     {
         audio.clip = gazeAudio;
         audio.Play();
     }
 
-    public void OnGazeExit( GazeHit hit )
+    protected override void DoGazeExit( GazeHit hit )
+    {
+        audio.Stop();
+    }
+
+    protected override void DoGazeStop( GazeHit hit )
     {
         audio.Stop();
     }

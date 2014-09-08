@@ -7,41 +7,30 @@ public class GazeLightTo : GazeBehaviour
     [SerializeField] private LightParams lightToParams;
     [SerializeField] private float time = 1;
 
+    private ValueLerper<LightParams> lightLerper;
     private LightParams startParams;
 
     void Awake()
     {
         if ( gazeLight == null ) { gazeLight = GetComponent<Light>(); }
         D.Assert( gazeLight != null, "Please assign the gazeLight." );
-        startParams = LightParams.ToParams( gazeLight );
-
+        lightLerper = new ValueLerper<LightParams>( gameObject, LightParams.Lerp );
     }
 
     protected override void DoGazeEnter( GazeHit hit )
     {
-        iTween.ValueTo( gameObject, iTween.Hash(
-                            "from", 0,
-                            "to", 1,
-                            "time", time,
-                            "onupdate", "LerpLightParams"
-                        )
-                      );
+        startParams = LightParams.ToParams( gazeLight );
+        lightLerper.Lerp( startParams, lightToParams, lp=>lp.Apply(gazeLight), time );
     }
 
     protected override void DoGazeExit( GazeHit hit )
     {
-        iTween.ValueTo( gameObject, iTween.Hash(
-                            "from", 1,
-                            "to", 0,
-                            "time", time,
-                            "onupdate", "LerpLightParams"
-                        )
-                      );
+        var currLightParams = LightParams.ToParams( gazeLight );
+        lightLerper.Lerp( currLightParams, startParams, lp=>lp.Apply(gazeLight), time );
     }
 
-    private void LerpLightParams( float value )
+    protected override void DoGazeStop( GazeHit hit )
     {
-        LightParams lp = LightParams.Lerp( startParams, lightToParams, value );
-        lp.Apply( gazeLight );
+        lightLerper.Stop();
     }
 }

@@ -14,6 +14,15 @@ public struct LightParams {
         l.range = range;
     }
 
+    public LightParams Delta( LightParams lp )
+    {
+        LightParams lpDelta;
+        lpDelta.color = color - lp.color;
+        lpDelta.intensity = intensity - lp.intensity;
+        lpDelta.range = range - lp.range;
+        return lpDelta;
+    }
+
     public static LightParams ToParams( Light l )
     {
         LightParams lp;

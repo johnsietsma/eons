@@ -14,6 +14,7 @@ public struct GazeHit {
 
     public override string ToString()
     {
-        return string.Format( "GazeHit - Gaze Input:{0}, Hit Object:{1}", gazeInput, hit.transform.name );
+        var n = hit.transform==null ? "Nothing" : hit.transform.name;
+        return string.Format( "GazeHit - Gaze Input:{0}, Hit Object:{1}", gazeInput, n );
     }
 }

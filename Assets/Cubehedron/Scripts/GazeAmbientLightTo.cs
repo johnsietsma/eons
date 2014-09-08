@@ -6,39 +6,28 @@ public class GazeAmbientLightTo : GazeBehaviour
     [SerializeField] private Color ambientColorTo;
     [SerializeField] private float time = 1;
 
-    private Color startColor;
+    private ColorLerper colorLerper;
+    private Color fromColor;
+
+    void Awake()
+    {
+        colorLerper = new ColorLerper( gameObject );
+    }
 
     protected override void DoGazeEnter( GazeHit hit )
     {
-        startColor = RenderSettings.ambientLight;
-        iTween.ValueTo( gameObject, iTween.Hash(
-                            "name", "gazeAmbientLightTo",
-                            "from", 0,
-                            "to", 1,
-                            "time", time,
-                            "onupdate", "LerpAmbientLight"
-                        )
-                      );
+        fromColor = RenderSettings.ambientLight;
+        colorLerper.Lerp( fromColor, ambientColorTo, v => RenderSettings.ambientLight = v, time );
     }
 
     protected override void DoGazeExit( GazeHit hit )
     {
-        iTween.ValueTo( gameObject, iTween.Hash(
-                            "from", 1,
-                            "to", 0,
-                            "time", time,
-                            "onupdate", "LerpAmbientLight"
-                        )
-                      );
+        var colorDiff = RenderSettings.ambientLight - fromColor;
+        colorLerper.Lerp( RenderSettings.ambientLight, fromColor - colorDiff, v => RenderSettings.ambientLight = v, time );
     }
 
     protected override void DoGazeStop( GazeHit hit )
     {
-        iTween.StopByName( gameObject, "gazeAmbientLightTo" );
-    }
-
-    private void LerpAmbientLight( float value )
-    {
-        RenderSettings.ambientLight = Color.Lerp( startColor, ambientColorTo, value );
+        colorLerper.Stop();
     }
 }

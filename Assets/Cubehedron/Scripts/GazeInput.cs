@@ -96,20 +96,20 @@ public class GazeInput : MonoBehaviour
         }
 
         // Enter the new gaze object
-        CurrentGazeObject.SendMessage( GazeEnterMessage, gazeHit, SendMessageOptions.DontRequireReceiver );
         if ( debug ) { D.Log( "GazeEnter: {0}", CurrentGazeObject.name ); }
+        CurrentGazeObject.SendMessage( GazeEnterMessage, gazeHit, SendMessageOptions.DontRequireReceiver );
     }
 
     private void DoGazeStay( GazeHit gazeHit )
     {
         CurrentGazeObject.SendMessage( GazeStayMessage, gazeHit, SendMessageOptions.DontRequireReceiver );
-        if ( debug ) { D.Log( "GazeStay: {0}", CurrentGazeObject.name ); }
+        //if ( debug ) { D.Log( "GazeStay: {0}", CurrentGazeObject.name ); }
     }
 
     private void DoGazeExit( GazeHit gazeHit )
     {
-        CurrentGazeObject.SendMessage( GazeExitMessage, gazeHit, SendMessageOptions.DontRequireReceiver );
         if ( debug ) { D.Log( "GazeExit: {0}", CurrentGazeObject.name ); }
+        CurrentGazeObject.SendMessage( GazeExitMessage, gazeHit, SendMessageOptions.DontRequireReceiver );
 
         BoxCollider bc = CurrentGazeHit.collider as BoxCollider;
         if ( bc ) {
