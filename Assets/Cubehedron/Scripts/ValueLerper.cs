@@ -53,7 +53,6 @@ public class ValueLerper<T>
 
     private void UpdateValueLerp( float t )
     {
-        D.Log( "UpdateValueLerp" );
         T newValue = lerper( fromValue, toValue, t );
         valueSetter( newValue );
     }

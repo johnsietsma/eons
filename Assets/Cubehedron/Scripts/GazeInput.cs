@@ -46,9 +46,11 @@ public class GazeInput : MonoBehaviour
         GameObject newGazeObject = null;
         RaycastHit newRaycastHit = DefaultRaycastHit;
 
-        if ( Physics.Raycast( GazeTransform.position, GazeTransform.forward, out hit, Mathf.Infinity, gazeLayerMask  ) ) {
-            newRaycastHit = hit;
-            newGazeObject = hit.transform.gameObject;
+        if ( Physics.Raycast( GazeTransform.position, GazeTransform.forward, out hit, Mathf.Infinity  ) ) {
+            if ( hit.transform.gameObject.CompareLayer( gazeLayerMask ) ) {
+                newRaycastHit = hit;
+                newGazeObject = hit.transform.gameObject;
+            }
         }
 
         bool isNewGazeObject = CurrentGazeObject != newGazeObject;

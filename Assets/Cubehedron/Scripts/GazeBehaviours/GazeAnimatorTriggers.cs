@@ -21,6 +21,7 @@ public class GazeAnimatorTriggers : GazeBehaviour
 
     protected override void DoGazeEnter( GazeHit hit )
     {
+        if( !gazeAnimator.enabled ) gazeAnimator.enabled = true;
         gazeAnimator.SetTrigger( GazeEnterTrigger );
     }
 

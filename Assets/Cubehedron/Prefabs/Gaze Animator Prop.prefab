@@ -55,7 +55,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2, y: 2, z: 3}
+  m_LocalPosition: {x: 2.65209866, y: 1.92679358, z: 5.9999671}
   m_LocalScale: {x: 1, y: 1, z: .200000003}
   m_Children:
   - {fileID: 400000}
@@ -114,6 +114,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!111 &11100000
 Animation:
   m_ObjectHideFlags: 1
@@ -139,6 +140,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e7cc692eb6d14053a084fbc3fb5bdac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  exitBehaviour: 1
+  delay: 0
+  debug: 0
   gazeAnimator: {fileID: 0}
   GazeEnterTrigger: OnGazeEnter
   GazeExitTrigger: OnGazeExit

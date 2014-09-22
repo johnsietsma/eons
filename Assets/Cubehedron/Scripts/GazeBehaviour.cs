@@ -20,13 +20,13 @@ public abstract class GazeBehaviour : MonoBehaviour
 
     public void OnGazeStay( GazeHit hit )
     {
-        if ( !enabled ) { return; }
+        if ( !enabled || !isEntered ) { return; }
         DoGazeStayInternal( hit );
     }
 
     public void OnGazeExit( GazeHit hit )
     {
-        if ( !enabled ) { return; }
+        if ( !enabled || !isEntered ) { return; }
         StopCoroutine( "DoGazeEnterInternalCoroutine" );
         DoGazeExitInternal( hit );
     }

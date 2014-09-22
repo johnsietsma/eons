@@ -5,6 +5,11 @@ using UnityEngine;
 
 public static class GameObjectExtensions
 {
+    public static bool CompareLayer( this GameObject go, LayerMask layerMask )
+    {
+        return ( 1 << go.layer & layerMask ) != 0;
+    }
+
     public static GameObject EnsureChild( this GameObject go, string childName ) {
         return Ensure.Child( go, childName );
     }

@@ -10,15 +10,27 @@ public class GazeExamine : GazeBehaviour
     private Vector3 startPos;
     private GazeInput gazeInput;
 
+    private BoxCollider boxCollider;
+    private Vector3 boxColliderStartSize;
+
     void Awake()
     {
         startPos = transform.position;
+
+        if( collider && collider is BoxCollider ) {
+          boxCollider = collider as BoxCollider;
+          boxColliderStartSize = boxCollider.size;
+        }
     }
 
     protected override void DoGazeEnter( GazeHit hit )
     {
         gazeInput = hit.gazeInput;
         var pos = gazeInput.GazeTransform.forward * examineRadius;
+
+        if( boxCollider!=null ) {
+          boxCollider.size = boxColliderStartSize * 2;
+        }
 
         iTween.MoveTo( gameObject, iTween.Hash(
                            "name", "gazeExamine",
@@ -37,11 +49,19 @@ public class GazeExamine : GazeBehaviour
                        ) );
 
         gazeInput = null;
+
+        if( boxCollider!=null ) {
+          boxCollider.size = boxColliderStartSize;
+        }
     }
 
     protected override void DoGazeStop( GazeHit hit )
     {
         iTween.StopByName( gameObject, "gazeExamine" );
+
+        if( boxCollider!=null ) {
+          boxCollider.size = boxColliderStartSize;
+        }
     }
 
 }

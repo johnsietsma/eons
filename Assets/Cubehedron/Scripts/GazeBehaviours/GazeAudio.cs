@@ -7,7 +7,7 @@ public class GazeAudio : GazeBehaviour
 
     void Awake()
     {
-        D.Assert( audio!=null, "Gaze audio must have an audio source." );
+        if( audio==null ) gameObject.AddComponent<AudioSource>();
     }
 
     protected override void DoGazeEnter( GazeHit hit )

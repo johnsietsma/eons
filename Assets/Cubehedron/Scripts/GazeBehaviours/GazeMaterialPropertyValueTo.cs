@@ -18,6 +18,7 @@ public class GazeMaterialPropertyValueTo : GazeBehaviour
             propertyMaterial = renderer.material;
         }
         D.Assert( propertyMaterial.HasProperty( propertyName ), "Material {0} doesn't have property with name {1},", propertyMaterial.name, propertyName );
+        D.Log( "Awake: " + propertyMaterial );
     }
 
     protected override void DoGazeEnter( GazeHit hit )

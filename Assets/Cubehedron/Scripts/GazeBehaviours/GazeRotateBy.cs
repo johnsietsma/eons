@@ -5,14 +5,22 @@ public class GazeRotateBy : GazeBehaviour
 {
     [SerializeField] private Vector3 rotation;
     [SerializeField] private float speed;
-    [SerializeField] private Space space;
+
+    private Quaternion startRotation;
+
+    void Awake()
+    {
+        startRotation = transform.localRotation;
+    }
 
     protected override void DoGazeEnter( GazeHit hit )
     {
-        iTween.RotateBy( gameObject, iTween.Hash(
-            "amount", rotation,
+        iTween.Stop( "rotate" );
+        transform.localRotation = startRotation;
+        iTween.RotateTo( gameObject, iTween.Hash(
+            "rotation", rotation,
             "speed", speed,
-            "space", space,
+            "space", Space.Self,
             "islocal", true
             ));
     }
@@ -20,6 +28,12 @@ public class GazeRotateBy : GazeBehaviour
     protected override void DoGazeExit( GazeHit hit )
     {
         iTween.Stop( "rotate" );
+        iTween.RotateTo( gameObject, iTween.Hash(
+            "rotation", startRotation.eulerAngles,
+            "speed", speed,
+            "space", Space.Self,
+            "islocal", true
+            ));
     }
 
     protected override void DoGazeStop( GazeHit hit )
